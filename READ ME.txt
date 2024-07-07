@@ -1,0 +1,3 @@
+Palagay yung folder sa C:\xampp\htdocs\
+Then sa URL naman is: http://localhost/adet-voting/
+Palitan niyo nalang yung username, password, and port sa db_connection.php if hindi tayo same hehe

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" href="css/vice-styles.css">
+    <title>Cast Your Vote</title>
+    <script src="https://kit.fontawesome.com/84ccdc0b43.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="progress-container">
+        <div class="progress-bar1"></div>
+        <div class="progress-bar2"></div>
+        <div class="progress-bar3"></div>
+    </div>
+    <div class="container">
+        <div class="header">
+            <h2>Cast Your Vote for Vice President</h2>
+            <p>Note: Vote for one [1] Vice President only</p>
+        </div>
+        <div class="candidates">
+            <div class="candidates_container">
+                <!-- Candidates will be populated dynamically here -->
+            </div>
+        </div>
+        <div class="next">
+            <button id="nextButton">
+                Next
+                <img src="css/pictures/proceed.png" alt="">
+            </button>
+        </div>
+    </div>
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            fetch('fetch_candidates.php')
+                .then(response => response.json())
+                .then(data => {
+                    // Function to create candidate element
+                    function createCandidateElement(candidate) {
+                        const candidateElement = document.createElement('div');
+                        candidateElement.classList.add('outer-box');
+                        candidateElement.innerHTML = `
+                            <div class="inner-box">
+                                <div class="candidate-img">
+                                    <img src='${candidate.candidate_img ? candidate.candidate_img : 'ppic.png'}' alt="Candidate Image">
+                                </div>
+                                <div class="candidate">
+                                    <div class="candidate-info">
+                                        <p class="name">${candidate.candidate_fname} ${candidate.candidate_lname}</p>
+                                        <p class="party">Party List: ${candidate.party_list}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="radio-container">
+                                <input type="radio" id="${candidate.candidate_id}" name="vicepresident" value="${candidate.candidate_id}">
+                                <label for="${candidate.candidate_id}"></label> Vice President
+                            </div>
+                        `;
+                        return candidateElement;
+                    }
+
+                    // Populate Vice President candidates
+                    const candidatetContainer = document.querySelector('.candidates_container');
+                    data.filter(candidate => candidate.position_id === '1').forEach(candidate => {
+                        const candidateElement = createCandidateElement(candidate);
+                        candidatetContainer.appendChild(candidateElement);
+                    });
+                })
+                .catch(error => console.error('Error fetching candidates:', error));
+        });
+
+        document.getElementById('nextButton').addEventListener('click', function() {
+            var candidatetSelected = document.querySelector('input[name="vicepresident"]:checked');
+            if (!candidatetSelected) {
+                alert('Please select a candidate for Vice President.');
+                return false;
+            } else {
+                window.location.href = 'voter_councilor.html';
+            }
+        });
+    </script>
+</body>
+</html>

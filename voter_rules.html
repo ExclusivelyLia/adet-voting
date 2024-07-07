@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" href="css/rules-style.css">
+    <title>Voting Guidelines</title>
+</head>
+<body>
+    <div class="container">
+        <h2>Please be mindful of the following Voting Guidelines.</h2>
+        <div class="guidelines">
+            <div class="guideline">
+                <div class="g-img">
+                    <img src="css/pictures/ruleLogo1.png" alt="Eligibility Icon">
+                </div>
+                <h3 class="g-one">Eligibility</h3>
+                <p>Only students enrolled in the College of Computer and Information Sciences (CCIS) are eligible to participate in the voting process.</p>
+            </div>
+            <div class="guideline">
+                <div class="g-img">
+                    <img src="css/pictures/ruleLogo2.png" alt="One Person One Vote Icon">
+                </div>
+                <h3 class="g-two">One Person <br/> One Vote</h3>
+                <p>Each student can vote once for president, once for vice president, and six times for councilors per election. This ensures fairness and allows students to express their preferences without undue influence.</p>
+            </div>
+            <div class="guideline">
+                <div class="g-img">
+                    <img src="css/pictures/ruleLogo3.png" alt="Confidentiality Icon">
+                </div>
+                <h3 class="g-three">Confidentiality</h3>
+                <p>The voting process must ensure confidentiality and anonymity. Individual voting choices should not be visible to anyone, including administrators, to maintain the integrity of the process.</p>
+            </div>
+            <div class="guideline">
+                <div class="g-img">
+                    <img src="css/pictures/ruleLogo4.png" alt="Deadline Icon">
+                </div>
+                <h3 class="g-four">Deadline</h3>
+                <p>A clear voting deadline should be set and communicated to all students in advance. Once the deadline passes, the voting process should automatically close to prevent any further votes.</p>
+            </div>
+        </div>
+        <div class="proceed">
+            <button id="proceedButton">
+                Proceed
+                <img src="css/pictures/proceed.png" alt="Arrow Icon">
+            </button>
+        </div>
+    </div>
+    <script>
+        document.getElementById('proceedButton').addEventListener('click', function() {
+            window.location.href = 'voter_president.html';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+body {
+    font-family: Poppins;
+    background-image: url(pictures/bg.jpg);
+    color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background-color: #13072E;
+    padding: 20px;
+    border-radius: 40px;
+    width: 900px;
+    height: 550px;
+    margin-left: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.title {
+    text-align: left;
+    margin-bottom: 10px;
+    margin-left: 20px;
+    color: #4C6DD3;
+}
+
+.title-line {
+    height: 2px;
+    background-color: #312E5D;
+    margin-bottom: 20px;
+}
+
+.form-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.upload-section {
+    position: relative; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 55px;
+    margin-left: 50px;
+}
+
+.upload-section label {
+    cursor: pointer;
+    text-align: center;
+}
+
+.upload-section .upload-icon {
+    width: 230px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed #fefefe;
+    border-radius: 10px;
+    color: #ffffff;
+    position: relative;
+}
+
+.upload-section .upload-icon img {
+    width: 230px;
+    height: 200px;
+    border-radius: 10px;
+}
+
+.upload-section .Remove-Photo {
+    color: #ffffff;
+    margin-left: 55px;
+    position: absolute;
+    bottom: 10px;
+    cursor: pointer;
+    padding: 5px;
+    white-space: nowrap;
+}
+
+.upload-section input[type="file"] {
+    display: none;
+}
+
+.form-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 60%;
+    margin-top: 50px;
+}
+
+.input-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+    flex: 1;
+}
+
+.input-group label {
+    margin-bottom: 5px;
+    color: #B0B0B0;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    border-radius: 20px;
+    box-sizing: border-box;
+    max-width: 250px; 
+}
+
+.bottom-line {
+    height: 2px;
+    background-color: #312E5D;
+    margin-top: auto;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    padding: 20px 0;
+}
+
+.back-button, .create-button {
+    background-color: #ffffff;
+    color: black;
+    border-radius: 20px;        
+    padding: 10px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center; 
+}
+
+.back-button {
+    margin-left: 20px; 
+}
+
+.back-button:before {
+    content: '←'; 
+    margin-right: 8px; 
+}

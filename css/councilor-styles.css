@@ -1,0 +1,221 @@
+body {
+    font-family: 'Poppins';
+    display: flex;
+    color: white;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    background: url(pictures/bg-general.png);
+    background-size: cover;
+}
+.container {
+    width: 70%;
+    height: 60%;
+    padding-left: 50px;
+    padding-top: 40px;
+    padding-right: 35px;
+    padding-bottom: 40px;
+    background-color: #13072E;
+    border-radius: 40px;
+    position: absolute;
+    top: 150px;
+    right: 100px;
+}
+.header {
+    text-align: center;
+}
+.header h2 {
+    color: #4C6DD3;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: left;
+    margin: 0px;
+}
+.header p {
+    color: azure;
+    font-size: 16px;
+    text-align: left;
+    margin-top: 0px;
+    margin-bottom: 50px;
+}
+.candidates {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.candidate {
+    background-color: #13072e00;
+    border-radius: 10px;
+    padding: 20px;
+    width: 260px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 10px;
+}
+.candidate-img {
+    position: absolute;
+    top: 100px;
+}
+.candidate-img img {
+    width: 170px;
+    height: 165px;
+    border-radius: 10px;
+    border: 2px solid #ffffff;
+    position: absolute;
+    right: -87px;
+    top: -85px;
+}
+.candidate-info {
+    margin-top: 10px;
+    position: absolute;
+    top: -20px;
+}
+.candidate-info p {
+    margin: 5px 0;
+}
+.candidate-info p.name {
+    font-weight: bold;
+    font-size: 14.5px;
+    margin-bottom: 0px;
+}
+.candidate-info p.party {
+    margin-top: 0px;
+    color: #A5A1D6;
+    font-size: 13px;
+}
+.candidate input {
+    margin-top: 10px;
+    cursor: pointer;
+}
+.next {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+.next button {
+    font-family: 'Poppins';
+    font-weight: bold;
+    color: #13072E;
+    background-color: azure;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 70px;
+    width: 140px;
+    height: 45px;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 30px;
+}
+.next button img {
+    width: 30px;
+    height: 30px;
+    margin-left: 40px;
+}
+.next button:hover {
+    background-color: #d5d4d8;
+}
+.progress-container {
+    width: 80%;
+    top: 90px;
+    display: flex;
+    align-self: start;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    position: absolute;
+    right: 65px;
+}
+.progress-bar3 {
+    background-color: #6132BB;
+    height: 20px;
+    width: 350px;
+    margin: 10px;
+    border-radius: 50px;
+    display: flex;
+    top: 30px;
+}
+.progress-bar1, 
+.progress-bar2 {
+    background-color: #E2D3FF;
+    height: 20px;
+    width: 350px;
+    margin: 10px;
+    border-radius: 50px;
+    display: flex;
+    top: 30px;
+}
+.outer-box {
+    width: 250px;
+    height: 330px;
+    background-color: #E2D3FF;
+    border-radius: 15px;
+    border: 2px solid #614DC6;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.inner-box {
+    width: 220px;
+    height: 250px;
+    background-color: #312E5D;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 168px;
+}
+.radio-container {
+    width: 218px;
+    height: 40px;
+    background-color: azure;
+    color: #1A1A3B;
+    font-weight: bold;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: absolute;
+    top: 430px;
+}
+.radio-container input[type="radio"] {
+    /* Hide default radio button */
+    display: none;
+}
+
+.radio-container label {
+    /* Styling for the custom radio button */
+    margin-left: 15px;
+    margin-right: 40px;
+    height: 20px;
+    width: 20px;
+    font-weight: bold;
+    border-radius: 50%;
+    border: 2px solid #13072E;
+    background-color: #13072E;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+}
+
+.radio-container input[type="radio"]:checked + label::after {
+    /* Show a dot inside the custom radio button when checked */
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: linear-gradient(to right, #8A6B9B, #D67197);
+}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" href="css/login_admin.css">
+    <title>Administrator's Login Page</title>
+</head>
+<body>
+    <div class="login-container">
+        <form action="login_admin.php" method="post">
+            <input class="userName" type="text" id="username" name="username" required>
+            <br>
+            <input class="passWord" type="password" id="password" name="password" required>
+            <img class="passWord-toggle" src="css/pictures/view-pass.png" onclick="togglePasswordVisibility()">
+            <br>
+            <button class="sign-in" type="submit">Sign In</button>
+        </form>
+    </div>
+    <script src="login_admin.js"></script>
+</body>
+</html>

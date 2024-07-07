@@ -1,0 +1,65 @@
+body {
+    font-family: 'Poppins';
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+    margin: 0;
+    background: url(pictures/login-admin.png);
+    background-size: cover;
+}
+.userName,
+.passWord {
+    font-weight: bold;
+    width: 28%;
+    padding: 0.7em;
+    border: none;
+    border-radius: 70px;
+    background: #9e93c1;
+    color: white;
+    font-size: 2em;
+    margin-bottom: 1em;
+    transition: background 0.3s;
+    position: absolute;
+}
+.userName {
+    top: 34%;
+    left: 97%;
+    transform: translateX(-130%);
+}
+.passWord {
+    top: 52%;
+    left: 97%;
+    transform: translateX(-130%);
+}
+.passWord-toggle {
+    position: absolute;
+    top: 55.5%;
+    left: 85%;
+    transform: translateX(-90%);
+    width: 40px;
+    height: auto;
+    cursor: pointer;
+}
+button.sign-in {
+    font-family: 'Poppins';
+    font-weight: bold;
+    width: 100%;
+    max-width: 300px;
+    padding: 0.7em;
+    border: none;
+    border-radius: 70px;
+    background: linear-gradient(to right, #8A6B9B, #D67197);
+    box-shadow: 0 8px 10px #1A1A3B;
+    color: white;
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: background 0.3s;
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translateX(60%);
+}
+button.sign-in:hover {
+    background: linear-gradient(to right, #462f52, #a64d6f);
+}

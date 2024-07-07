@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <title>Voter's Login Page</title>
+    <style>
+        body {
+            font-family: 'Poppins';
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+            margin: 0;
+            background: url(css/pictures/login-voter.png);
+            background-size: cover;
+        }
+        .studID,
+        .refID {
+            font-weight: bold;
+            width: 28%;
+            padding: 0.7em;
+            border: none;
+            border-radius: 70px;
+            background: #9e93c1;
+            color: white;
+            font-size: 2em;
+            margin-bottom: 1em;
+            transition: background 0.3s;
+            position: absolute;
+        }
+        .studID {
+            top: 34%;
+            left: 97%;
+            transform: translateX(-130%);
+        }
+        .refID {
+            top: 52%;
+            left: 97%;
+            transform: translateX(-130%);
+        }
+        button.sign-in {
+            font-family: 'Poppins';
+            font-weight: bold;
+            width: 100%;
+            max-width: 300px;
+            padding: 0.7em;
+            border: none;
+            border-radius: 70px;
+            background: linear-gradient(to right, #8A6B9B, #D67197);
+            box-shadow: 0 8px 10px #1A1A3B;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: background 0.3s;
+            position: absolute;
+        }
+        button.sign-in {
+            top: 70%;
+            left: 50%;
+            transform: translateX(60%);
+        }
+        button.sign-in:hover {
+            background: linear-gradient(to right, #462f52, #a64d6f);
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <form action="login_voter.php" method="post">
+            <input class="studID" type="text" id="studentID" name="studentID" placeholder="Student ID" required>
+            <br>
+            <input class="refID" type="text" id="referenceID" name="referenceID" placeholder="Reference ID" required>
+            <br>
+            <button class="sign-in" type="submit">Sign In</button>
+        </form>
+    </div>
+
+    <script src="login_voter.js"></script>
+</body>
+</html>

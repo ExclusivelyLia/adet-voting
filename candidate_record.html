@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidate Record</title>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" href="css/candidate_record.css">
+    <script src="https://kit.fontawesome.com/84ccdc0b43.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="main-container">
+        <div class="header">
+            <h1><b>Candidate Management</b></h1>
+            <div class="separator"></div>
+        </div>
+        <div class="container">
+            <div class="title-bar">
+                <div class="title-section">
+                    <h2>Election Candidates</h2>
+                    <p><i>Manage the list of candidates participating in the election.</i></p>
+                </div>
+                <div class="controls">
+                    <button class="voting-time">Voting End Time</button>
+                    <input type="text" id="searchInput" placeholder="Search">
+                    <button class="filter">
+                        <img src="css/pictures/icons.png" alt="Filter Icon">
+                    </button>
+                </div>
+            </div>
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Candidate ID</th>
+                            <th>Position</th>
+                            <th>First Name</th>
+                            <th>Middle Name</th>
+                            <th>Last Name</th>
+                            <th>Partylist</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="candidatesTableBody">
+                        <!-- This will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="create-button">
+                <a href="candidate_add.html"> <button>Create</button> </a>
+            </div>
+        </div>
+    </div>
+    <script src="candidate_record.js"></script>
+</body>
+</html>
