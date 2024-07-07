@@ -9,7 +9,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 candidateElement.innerHTML = `
                     <div class="inner-box">
                         <div class="candidate-img">
-                            <img src='${candidate.candidate_img ? candidate.candidate_img : 'ppic.png'}' alt="Candidate Image">
+                            <img src='${candidate.candidate_img ? candidate.candidate_img : 'css/pictures/ppic.jpg'}' alt="Candidate Image">
                         </div>
                         <div class="candidate">
                             <div class="candidate-info">
