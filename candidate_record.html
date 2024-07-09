@@ -6,7 +6,9 @@
     <title>Candidate Record</title>
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <link rel="stylesheet" href="css/candidate_record.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://kit.fontawesome.com/84ccdc0b43.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
 <body>
     <div class="main-container">
@@ -21,10 +23,16 @@
                     <p><i>Manage the list of candidates participating in the election.</i></p>
                 </div>
                 <div class="controls">
-                    <button class="voting-time">Voting End Time</button>
-                    <input type="text" id="searchInput" placeholder="Search">
+                    <button id="votingEnd" class="voting-time">
+                        <i class="fa-solid fa-calendar-days" style="color: #e2e2e2;"></i> Voting End Time
+                    </button>
+                    <input type="text" id="date-picker-input" style="display:none;">
+                    <div id="flatpickr-container"></div> 
+                    <div class="search">
+                        <input type="text" id="searchInput" placeholder="Search">
+                    </div>
                     <button class="filter">
-                        <img src="css/pictures/icons.png" alt="Filter Icon">
+                        <i class="fa-solid fa-filter" style="color: #e2d3ff;"></i>
                     </button>
                 </div>
             </div>
@@ -38,7 +46,7 @@
                             <th>Middle Name</th>
                             <th>Last Name</th>
                             <th>Partylist</th>
-                            <th>Actions</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody id="candidatesTableBody">
@@ -47,7 +55,9 @@
                 </table>
             </div>
             <div class="create-button">
-                <a href="candidate_add.html"> <button>Create</button> </a>
+                <button type="button" class="create-button" onclick="window.location.href='candidate_add.html'">
+                    Create<img src='css/pictures/create.png'>
+                </button>  
             </div>
         </div>
     </div>

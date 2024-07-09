@@ -1,0 +1,70 @@
+body {
+    font-family: 'Poppins';
+    display: flex;
+    color: white;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    background: url(pictures/alert-bg.png);
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+.container {
+    width: 30%;
+    height: 60%;
+    padding: 40px 43px 40px 50px;
+    background-color: #13072E;
+    border-radius: 40px;
+    align-self: center;
+}
+.check-img img {
+    height: 150px;
+    width: 160px;
+    align-items: center;
+    position: absolute;
+    justify-content: center;
+    left: 670px;
+    top: 200px;
+}
+.text-container {
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    position: absolute;
+    left: 600px;
+    top: 350px;
+}
+.text-container p {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 23px;
+}
+.text-container h2 {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 27px;
+    color: #654DD4;
+    font-weight: bold;
+}
+.done {
+    font-family: 'Poppins';
+    width: 180px;
+    height: 60px;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 18px;
+    position: absolute;
+    bottom: 210px;
+    align-items: center;
+    justify-content: center;
+    left: 660px;
+    cursor: pointer;
+}
+.done button:hover {
+    background-color: #a4a3a7;
+}

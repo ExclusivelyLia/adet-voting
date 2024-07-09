@@ -20,7 +20,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     </div>
                     <div class="radio-container">
                         <input type="radio" id="${candidate.candidate_id}" name="vicepresident" value="${candidate.candidate_id}">
-                        <label for="${candidate.candidate_id}">Vice President</label>
+                        <label for="${candidate.candidate_id}"></label> Vice President
                     </div>
                 `;
                 return candidateElement;
@@ -45,3 +45,8 @@ document.getElementById('nextButton').addEventListener('click', function() {
         window.location.href = 'voter_councilor.html';
     }
 });
+
+document.getElementById('backButton').addEventListener('click', function() {
+    window.location.href = 'voter_president.html';
+});
+

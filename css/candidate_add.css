@@ -31,13 +31,14 @@ body {
 .title-line {
     height: 2px;
     background-color: #312E5D;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
 }
 
 .form-container {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 60px;
+    height: 280px;
 }
 
 .upload-section {
@@ -45,7 +46,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 55px;
     margin-left: 50px;
 }
 
@@ -73,17 +73,25 @@ body {
 }
 
 .upload-section .Remove-Photo {
-    color: #ffffff;
-    margin-left: 55px;
+    color: #4C6DD3;
+    font-weight: bold;
     position: absolute;
     bottom: 10px;
     cursor: pointer;
     padding: 5px;
     white-space: nowrap;
+    margin-bottom: 20px;
+    background-color: white;
+    border-radius: 20px;
+    width: 220px;
 }
 
 .upload-section input[type="file"] {
     display: none;
+}
+
+::placeholder {
+    font-family: Poppins;
 }
 
 .form-section {
@@ -91,7 +99,6 @@ body {
     flex-direction: column;
     justify-content: space-between;
     width: 60%;
-    margin-top: 50px;
 }
 
 .input-row {
@@ -134,21 +141,49 @@ body {
     padding: 20px 0;
 }
 
-.back-button, .create-button {
+.back-button {
     background-color: #ffffff;
+    font-family: Poppins;
+    font-weight: bold;
     color: black;
-    border-radius: 20px;        
-    padding: 10px 20px;
+    border: none;
+    border-radius: 70px;        
+    padding: 10px 10px;
     cursor: pointer;
     display: flex;
     align-items: center; 
+    margin-right: 15px;
+    width: 140px;
+    padding: 10px 20px;
+    margin-left: 30px;
+    font-size: 18px;
 }
 
-.back-button {
-    margin-left: 20px; 
+.back-button img {
+    height: 30px;
+    width: 30px;
+    margin-right: 15px;
 }
 
-.back-button:before {
-    content: '←'; 
-    margin-right: 8px; 
+.create-button {
+    background-color: #ffffff;
+    font-family: Poppins;
+    font-weight: bold;
+    color: black;
+    border-radius: 70px;        
+    padding: 10px 36px;
+    cursor: pointer;
+    display: flex;
+    align-items: center; 
+    margin-right: 15px;
+    width: 140px;
+    font-size: 18px;
+}
+
+.back-button:hover {
+    background-color: #d5d4d8;
+}
+
+.create-button:hover {
+    background-color: #d5d4d8;
 }

@@ -11,11 +11,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         <div class="candidate-img">
                             <img src='${candidate.candidate_img ? candidate.candidate_img : 'css/pictures/ppic.jpg'}' alt="Candidate Image">
                         </div>
-                        <div class="candidate">
-                            <div class="candidate-info">
-                                <p class="name">${candidate.candidate_fname} ${candidate.candidate_lname}</p>
-                                <p class="party">Party List: ${candidate.party_list}</p>
-                            </div>
+                        <div class="candidate-info">
+                            <p class="name">${candidate.candidate_fname} ${candidate.candidate_lname}</p>
+                            <p class="party">Party List: ${candidate.party_list}</p>
                         </div>
                     </div>
                     <div class="radio-container">
@@ -27,10 +25,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
 
             // Populate President candidates
-            const presidentContainer = document.querySelector('.candidates_container');
+            const candidateContainer = document.querySelector('.candidates_container');
             data.forEach(candidate => {
                 const candidateElement = createCandidateElement(candidate);
-                presidentContainer.appendChild(candidateElement);
+                candidateContainer.appendChild(candidateElement);
             });
         })
         .catch(error => console.error('Error fetching candidates:', error));
@@ -44,4 +42,8 @@ document.getElementById('nextButton').addEventListener('click', function() {
     } else {
         window.location.href = 'voter_vice.html';
     }
+});
+
+document.getElementById('backButton').addEventListener('click', function() {
+    window.location.href = 'voter_rules.html';
 });

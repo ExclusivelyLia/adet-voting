@@ -18,8 +18,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
                             </div>
                         </div>
                     </div>
-                    <div class="radio-container">
-                        <input type="radio" id="${candidate.candidate_id}" name="councilor" value="${candidate.candidate_id}">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="${candidate.candidate_id}" name="councilor" value="${candidate.candidate_id}">
                         <label for="${candidate.candidate_id}"></label> Councilor
                     </div>
                 `;
@@ -37,13 +37,20 @@ window.addEventListener('DOMContentLoaded', (event) => {
 });
 
 document.getElementById('nextButton').addEventListener('click', function() {
-    var candidateSelected = document.querySelector('input[name="councilor"]:checked');
-    if (!candidateSelected) {
-        alert('Please select candidates for Councilor.');
+    var candidatesSelected = document.querySelectorAll('input[name="councilor"]:checked');
+    if (candidatesSelected.length === 0) {
+        alert('Please select at least one candidate for Councilor.');
         return false;
     } else {
-        window.location.href = '';
+        // Collect selected candidate IDs
+        var selectedIds = Array.from(candidatesSelected).map(checkbox => checkbox.value);
+        console.log('Selected candidate IDs:', selectedIds);
+        // You can handle the selected candidate IDs here, such as sending them to the server
+        window.location.href = 'voter_review.html'; // Set the URL to navigate after selection
     }
 });
 
+document.getElementById('backButton').addEventListener('click', function() {
+    window.location.href = 'voter_vice.html';
+});
 

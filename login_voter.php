@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Login successful, redirect to student dashboard
         session_start();
         $_SESSION['student_id'] = $studentID;
-        header("Location: test_studentdashboard.html");
+        header("Location: voter_rules.html");
         exit();
     } else {
         // Login failed, redirect back with error message

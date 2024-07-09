@@ -26,7 +26,7 @@ body {
     background-color: #13072E;
     border-radius: 40px;
     padding: 20px;
-    height: auto;
+    height: 570px;
 }
 .title-bar {
     display: flex;
@@ -50,6 +50,7 @@ body {
 .controls {
     display: flex;
     align-items: center;
+    border-radius: 70px;
 }
 .controls button, .controls input {
     padding: 10px;
@@ -73,22 +74,47 @@ body {
 .controls input {
     flex: 1;
     margin: 0 10px;
+    border-radius: 70px;
+    border: none;
+    padding: 12px 10px 12px 20px;
+    background-image: url(search.png);
+    background-position: 150px 9.5px; 
+    background-repeat: no-repeat;
+    background-size: 20px;
 }
 
 .controls input::placeholder {
     color: #B7ACDB; 
+    font-family: Poppins;
 }
 
 .controls .voting-time, .controls .filter {
     background-color: #312E5D;
 }
+
+.controls .voting-time {
+    font-family: Poppins;
+    border: none;
+    border-radius: 90px;
+    cursor: pointer;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    padding: 10px 20px;
+    position: relative; 
+}
+
+.controls .voting-time .fa {
+    margin-right: 8px;
+}
+
 .table-container {
     overflow-x: auto;
 }
 .table {
     width: 100%;
     border-collapse: collapse;
-    border-radius: 15px;
+    border-radius: 30px;
     overflow: hidden;
     margin: 0 auto;
     background-color: #3e3e5c;
@@ -105,28 +131,62 @@ body {
 
 .table th {
     background-color: #312E5D;
+    font-size: 15px;
 }
+
 .table tbody tr:nth-child(even) {
     background-color: #B7ACDB;
 }
+
 .table tbody tr:nth-child(odd) {
     background-color: #E2D3FF;
 }
+
 .table td .icon {
     cursor: pointer;
     color: black; 
 }
 .create-button {
+    position: absolute;
+    bottom: 40px;
+    left: 640px;
     display: flex;
     justify-content: flex-end;
-    margin-top: 20px;
+    
 }
 .create-button button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 15px;
     background-color: #312E5D;
-    color: #fff;
+    font-family: Poppins;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 70px;        
+    padding: 10px 10px;
     cursor: pointer;
+    font-size: 18px;
+    margin-bottom: 5px;
+    width: 150px;
+}
+
+.create-button button img {
+    height: 30px;
+    width: 30px;
+    margin-left: 20px;
+}
+.fa-solid {
     margin-right: 10px;
+}
+
+.flatpickr-calendar {
+    z-index: 1000;
+    margin-top: 200px; 
+    margin-left: 990px;
+}
+
+.edit-button, .delete-button {
+    padding: 5px 10px;
+    margin: 0 2px;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
 }
