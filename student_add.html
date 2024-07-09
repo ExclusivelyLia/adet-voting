@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Student</title>
+    <link rel="stylesheet" href="css/student_add.css">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+</head>
+<body>
+    <div class="container">
+        <h2 class="title">Register Student</h2>
+        <div class="title-line"></div>
+        <div class="form-section">
+            <div class="input-group">
+                <label for="student-id">Student ID</label>
+                <input type="text" id="student-id" name="student_id" placeholder="Student ID" required>
+            </div>
+            
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="first-name">First Name</label>
+                    <input type="text" id="first-name" name="first_name" placeholder="First Name" required>
+                </div>
+                <div class="input-group">
+                    <label for="year">Year</label>
+                    <select id="years" name="student_year" required>
+                        <option value="" disabled selected>Year</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="middle-name">Middle Name</label>
+                    <input type="text" id="middle-name" name="middle_name" placeholder="Middle Name" required>
+                </div>
+                <div class="input-group">
+                    <label for="section">Section</label>
+                    <select id="sections" name="student_section" required>
+                        <option value="" disabled selected>Section</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="1N">1N</option>
+                        <option value="2N">2N</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="last-name">Last Name</label>
+                    <input type="text" id="last-name" name="last_name" placeholder="Last Name" required>
+                </div>
+                <div class="input-group">
+                    <label for="program">Program</label>
+                    <select id="programs" name="student_program" required>
+                        <option value="" disabled selected>Program</option>
+                        <option value="BSIT">BSIT</option>
+                        <option value="BSCS">BSCS</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="date">Birthdate</label>
+                    <input type="date" id="date-input" name="date" class="date-input" required>
+                </div>
+                <div class="input-group">
+                    <label for="email">E-mail</label>
+                    <input type="text" id="email" name="email" placeholder="E-mail" required>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-line"></div>
+        <div class="action-buttons">
+            <button type="button" class="back-button" onclick="window.location.href='student_record.html'">
+                <img src="css/pictures/backicon.png">Back
+            </button>
+            <button type="button" class="create-button" onclick="confirmCreate()">Create</button>
+        </div>
+    </div>
+    <script src="student_add.js"></script>
+</body>
+</html>

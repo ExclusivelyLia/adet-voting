@@ -1,0 +1,156 @@
+body {
+    font-family: Poppins;
+    background-image: url(pictures/bg.jpg);
+    color: #E2D3FF;
+    margin: 0;
+    padding: 0;
+}
+.main-container {
+    width: 80%;
+    max-width: 1150px;
+    margin: 20px auto;
+    margin-left: 300px;
+}
+.header {
+    text-align: left;
+    padding: 20px;
+}
+.header h1 {
+    font-size: 30px;
+    margin: 0;
+}
+.header .separator {
+    border-bottom: 1px solid #E2D3FF;
+}
+.container {
+    background-color: #13072E;
+    border-radius: 40px;
+    padding: 20px;
+    height: 570px;
+}
+.title-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.title-section {
+    text-align: left;
+}
+.title-bar h2 {
+    font-size: 30px;
+    color: #a6a6df;
+    margin: 0;
+    margin-left: 15px;
+}
+.title-bar p {
+    margin-left: 15px;
+    margin-top: 0;
+}
+.controls {
+    display: flex;
+    align-items: center;
+    border-radius: 70px;
+}
+.controls button, .controls input {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #312E5D;
+    color: #B7ACDB;
+}
+.controls button.filter {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+.controls button.filter img {
+    width: 20px; 
+    height: 20px;
+}
+.controls button {
+    margin-right: 10px;
+}
+.controls input {
+    flex: 1;
+    margin: 0 10px;
+    border-radius: 70px;
+    border: none;
+    padding: 12px 10px 12px 20px;
+    background-image: url(pictures/search.png);
+    background-position: 150px 9.5px; 
+    background-repeat: no-repeat;
+    background-size: 20px;
+}
+
+.controls input::placeholder {
+    color: #B7ACDB; 
+    font-family: Poppins;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 30px;
+    overflow: hidden;
+    margin: 0 auto;
+    background-color: #3e3e5c;
+    color: white;
+}
+.table th, .table td {
+    padding: 10px;
+    border: none;
+}
+
+.table td {
+    color: black;
+}
+
+.table th {
+    background-color: #312E5D;
+    font-size: 15px;
+}
+.table tbody tr:nth-child(even) {
+    background-color: #B7ACDB;
+}
+.table tbody tr:nth-child(odd) {
+    background-color: #E2D3FF;
+}
+.table td .icon {
+    cursor: pointer;
+    color: black; 
+}
+.create-button {
+    position: absolute;
+    bottom: 40px;
+    left: 640px;
+    display: flex;
+    justify-content: flex-end;
+    
+}
+.create-button button {
+    background-color: #312E5D;
+    font-family: Poppins;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 70px;        
+    padding: 10px 10px;
+    cursor: pointer;
+    font-size: 18px;
+    margin-bottom: 5px;
+    width: 150px;
+}
+
+.create-button button img {
+    height: 30px;
+    width: 30px;
+    margin-left: 20px;
+}
+.fa-solid {
+    margin-right: 10px;
+}
+

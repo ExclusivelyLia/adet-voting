@@ -11,55 +11,170 @@
     <div class="container">
         <h2 class="title">Register Candidate</h2>
         <div class="title-line"></div>
-        <form id="createCandidateForm" action="candidate_add.php" method="post" enctype="multipart/form-data">
-            <div class="form-container">
-                <div class="upload-section">
-                    <label for="file-upload">
-                        <div class="upload-icon">
-                            <img id="uploaded-image" src="css/pictures/haha.png" class="responsive-image" alt="Upload File">
-                        </div>
-                        <div class="Remove-Photo">Remove Photo</div>
-                    </label>
-                    <input type="file" id="file-upload" name="candidate_img">
-                </div>
-                <div class="form-section">
-                    <div class="input-row">
-                        <div class="input-group">
-                            <label for="candidate-id">Candidate ID</label>
-                            <input type="text" id="candidate-id" name="candidate-id" placeholder="Candidate ID" required>
-                        </div>
-                        <div class="input-group">
-                            <label for="position-id">Position ID</label>
-                            <input type="text" id="position-id" name="position-id" placeholder="Position ID" required>
-                        </div>
+        <div class="form-container">
+            <div class="upload-section">
+                <label for="file-upload">
+                    <div class="upload-icon">
+                        <img id="uploaded-image" src="css/pictures/haha.png" class="responsive-image" alt="Upload File">
                     </div>
-                    <div class="input-row">
-                        <div class="input-group">
-                            <label for="first-name">First Name</label>
-                            <input type="text" id="first-name" name="first-name" placeholder="First Name" required>
-                        </div>
-                        <div class="input-group">
-                            <label for="partylist">Partylist</label>
-                            <input type="text" id="partylist" name="party-list" placeholder="Partylist" required>
-                        </div>
+                    <div class="Remove-Photo" onclick="removePhoto()">Remove Photo</div>
+                </label>
+                <input type="file" id="file-upload" name="candidate_img" accept="image/*">
+            </div>
+            <div class="form-section">
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="candidate-id">Candidate ID</label>
+                        <input type="text" id="candidate-id" name="candidate_id" placeholder="Candidate ID" required>
                     </div>
                     <div class="input-group">
-                        <label for="middle-name">Middle Name</label>
-                        <input type="text" id="middle-name" name="middle-name" placeholder="Middle Name" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="last-name">Last Name</label>
-                        <input type="text" id="last-name" name="last-name" placeholder="Last Name" required>
+                        <label for="position-id">Position ID</label>
+                        <input type="text" id="position-id" name="position_id" placeholder="Position ID" required>
                     </div>
                 </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="first-name">First Name</label>
+                        <input type="text" id="first-name" name="candidate_fname" placeholder="First Name" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="partylist">Partylist</label>
+                        <input type="text" id="partylist" name="party_list" placeholder="Partylist" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="middle-name">Middle Name</label>
+                    <input type="text" id="middle-name" name="candidate_mname" placeholder="Middle Name">
+                </div>
+                <div class="input-group">
+                    <label for="last-name">Last Name</label>
+                    <input type="text" id="last-name" name="candidate_lname" placeholder="Last Name" required>
+                </div>
             </div>
-            <div class="bottom-line"></div>
-            <div class="action-buttons">
-                <button type="button" class="back-button" onclick="window.location.href='candidate_record.html'"> <img src="css/pictures/backicon.png">Back</button>
-                <button type="button" class="create-button" onclick="confirmCreate()">Create</button>
-            </div>
-        </form>
+        </div>
+        <div class="bottom-line"></div>
+        <div class="action-buttons">
+            <button type="button" class="back-button" onclick="window.location.href='candidate_record.html'">
+                <img src="css/pictures/backicon.png"> Back
+            </button>
+            <button type="button" class="create-button" onclick="validateAndSubmit()">Create</button>
+        </div>
     </div>
-    <script src="candidate_add.js"></script>
+
+    <script>
+        // Function to handle removing uploaded photo
+        function removePhoto() {
+            var uploadInput = document.getElementById('file-upload');
+            var uploadedImage = document.getElementById('uploaded-image');
+            uploadInput.value = '';
+            uploadedImage.src = 'css/pictures/haha.png'; // Update to your placeholder image path
+        }
+
+        // Function to handle image preview on file input change
+        document.getElementById('file-upload').addEventListener('change', function() {
+            var file = this.files[0];
+            var uploadedImage = document.getElementById('uploaded-image');
+
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    uploadedImage.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                uploadedImage.src = 'css/pictures/haha.png'; // Reset to placeholder image if no file selected
+            }
+        });
+
+        // Function to validate and submit form
+        function validateAndSubmit() {
+            // Get form data
+            var candidateId = document.getElementById('candidate-id').value.trim();
+            var positionId = document.getElementById('position-id').value.trim();
+            var firstName = document.getElementById('first-name').value.trim();
+            var partylist = document.getElementById('partylist').value.trim();
+            var middleName = document.getElementById('middle-name').value.trim();
+            var lastName = document.getElementById('last-name').value.trim();
+            var candidateImg = document.getElementById('file-upload').files[0]; // Updated to use 'file-upload' for image file
+
+            // Validate form data (add more validation as needed)
+            if (candidateId === '' || positionId === '' || firstName === '' || lastName === '') {
+                alert('Please fill out all required fields.');
+                return;
+            }
+
+            // Validate position_id
+            if (positionId !== '1' && positionId !== '2' && positionId !== '3') {
+                alert('Invalid position ID. Please enter 1, 2, or 3.');
+                return;
+            }
+
+            // Validate party list constraints
+            var partyListArray = partylist.split(',');
+            var presidentCount = 0, vicePresidentCount = 0, councilorCount = 0;
+
+            partyListArray.forEach(function(item) {
+                var trimmedItem = item.trim().toLowerCase();
+                if (trimmedItem === 'president') {
+                    presidentCount++;
+                } else if (trimmedItem === 'vice president') {
+                    vicePresidentCount++;
+                } else if (trimmedItem === 'councilor') {
+                    councilorCount++;
+                }
+            });
+
+            if (presidentCount > 1 || vicePresidentCount > 1 || councilorCount > 6) {
+                alert('Party list can only have 1 President, 1 Vice President, and 6 Councilors.');
+                return;
+            }
+
+            // Confirm submission
+            if (confirm('Are you sure you want to create this candidate?')) {
+                // Prepare form data to send via FormData
+                var formData = new FormData();
+                formData.append('candidate_id', candidateId);
+                formData.append('position_id', positionId);
+                formData.append('candidate_fname', firstName);
+                formData.append('candidate_mname', middleName);
+                formData.append('candidate_lname', lastName);
+                formData.append('party_list', partylist);
+
+                // Append candidate_img if it's not undefined (optional field handling)
+                if (candidateImg) {
+                    formData.append('candidate_img', candidateImg);
+                }
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', 'candidate_add.php', true);
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        try {
+                            var response = JSON.parse(xhr.responseText);
+                            if (response.success) {
+                                alert(response.success);
+                                window.location.href = 'candidate_add.html'; // Redirect only on success
+                            } else if (response.error) {
+                                alert('Error: ' + response.error);
+                                // Don't redirect on error
+                            }
+                        } catch (e) {
+                            alert('Unable to parse server response');
+                        }
+                    } else {
+                        alert('Error: ' + xhr.statusText);
+                        // Don't redirect on error
+                    }
+                };
+                xhr.onerror = function() {
+                    alert('Request failed.');
+                    // Don't redirect on error
+                };
+                xhr.send(formData); // Send FormData object containing form data and file (if uploaded)
+            } else {
+                return; // Do nothing if user cancels
+            }
+        }
+    </script>
 </body>
-</html>    
+</html>
