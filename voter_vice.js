@@ -2,46 +2,51 @@ window.addEventListener('DOMContentLoaded', (event) => {
     fetch('vp_fetch_candidates.php')
         .then(response => response.json())
         .then(data => {
-            // Function to create candidate element
+            console.log('Fetched Vice President Candidates:', data); // Log fetched data
             function createCandidateElement(candidate) {
                 const candidateElement = document.createElement('div');
                 candidateElement.classList.add('outer-box');
                 candidateElement.innerHTML = `
                     <div class="inner-box">
                         <div class="candidate-img">
-                            <img src='${candidate.candidate_img ? candidate.candidate_img : 'css/pictures/ppic.jpg'}' alt="Candidate Image">
+                            <img src='${candidate.candidate_img ? candidate.candidate_img : 'css/pictures/default-ppic.png'}' alt="Candidate Image">
                         </div>
-                        <div class="candidate">
-                            <div class="candidate-info">
-                                <p class="name">${candidate.candidate_fname} ${candidate.candidate_lname}</p>
-                                <p class="party">Party List: ${candidate.party_list}</p>
-                            </div>
+                        <div class="candidate-info">
+                            <p class="name">${candidate.candidate_fname} ${candidate.candidate_lname}</p>
+                            <p class="party">Party List: ${candidate.party_list}</p>
                         </div>
                     </div>
                     <div class="radio-container">
-                        <input type="radio" id="${candidate.candidate_id}" name="vicepresident" value="${candidate.candidate_id}">
+                        <input type="radio" id="${candidate.candidate_id}" name="vicePresident" value="${candidate.candidate_id}" data-name="${candidate.candidate_fname} ${candidate.candidate_lname}" data-party="${candidate.party_list}">
                         <label for="${candidate.candidate_id}"></label> Vice President
                     </div>
                 `;
                 return candidateElement;
             }
 
-            // Populate Vice President candidates
-            const candidatesContainer = document.querySelector('.candidates_container');
+            const candidateContainer = document.querySelector('.candidates_container');
             data.forEach(candidate => {
                 const candidateElement = createCandidateElement(candidate);
-                candidatesContainer.appendChild(candidateElement);
+                candidateContainer.appendChild(candidateElement);
             });
         })
         .catch(error => console.error('Error fetching candidates:', error));
 });
 
 document.getElementById('nextButton').addEventListener('click', function() {
-    var candidatetSelected = document.querySelector('input[name="vicepresident"]:checked');
-    if (!candidatetSelected) {
+    var candidateSelected = document.querySelector('input[name="vicePresident"]:checked');
+    if (!candidateSelected) {
         alert('Please select a candidate for Vice President.');
         return false;
     } else {
+        const selectedVicePresident = {
+            id: candidateSelected.value,
+            name: candidateSelected.getAttribute('data-name'),
+            party: candidateSelected.getAttribute('data-party'),
+            candidate_img: candidateSelected.getAttribute('data-img')
+        };
+        console.log('Selected Vice President:', selectedVicePresident); // Log selected VP
+        localStorage.setItem('selectedVicePresident', JSON.stringify(selectedVicePresident));
         window.location.href = 'voter_councilor.html';
     }
 });
@@ -49,4 +54,3 @@ document.getElementById('nextButton').addEventListener('click', function() {
 document.getElementById('backButton').addEventListener('click', function() {
     window.location.href = 'voter_president.html';
 });
-
