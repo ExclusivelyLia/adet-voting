@@ -39,12 +39,12 @@ function confirmCreate() {
             alert(data.success);
             window.location.href = 'student_record.html';
         } else {
-            if (data.error.includes('Duplicate entry')) {
+            if (data.error && data.error.includes('Duplicate entry')) {
                 alert('Student ID already exists. Please choose a different ID.');
             } else {
-                alert(data.error);
+                alert(data.error || 'Unknown error occurred.');
             }
         }
     })
-    .catch(error => console.error('Error adding student:', error));
+    .catch(error => console.error('Error adding student:', error));    
 }

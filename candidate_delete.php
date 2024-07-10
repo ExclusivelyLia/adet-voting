@@ -13,6 +13,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
         exit;
     }
 
+    // Fetch the candidate image file name
+    $sql = "SELECT candidate_img FROM candidate WHERE candidate_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $candidateId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $candidate = $result->fetch_assoc();
+    $stmt->close();
+
+    // Check if the candidate exists
+    if (!$candidate) {
+        echo json_encode(array('success' => false, 'message' => 'Candidate not found'));
+        $conn->close();
+        exit;
+    }
+
+    // Delete the image file if it exists
+    if (!empty($candidate['candidate_img'])) {
+        $imagePath = 'C:/xampp/htdocs/adet-voting/Candidate/' . $candidate['candidate_img'];
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
+    }
+
     // Prepare and execute the DELETE statement
     $sql = "DELETE FROM candidate WHERE candidate_id = ?";
     $stmt = $conn->prepare($sql);
