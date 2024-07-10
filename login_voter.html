@@ -77,6 +77,14 @@
         </form>
     </div>
 
-    <script src="login_voter.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const error = urlParams.get('error');
+            if (error === 'invalid_credentials') {
+                alert('Invalid student ID or reference ID. Please try again.');
+            }
+        });
+    </script>
 </body>
 </html>

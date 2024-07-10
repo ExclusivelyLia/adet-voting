@@ -1,26 +1,16 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     // Function to create candidate elements
     function createCandidateElement(candidate) {
-        console.log('Creating candidate element for:', candidate); // Debug log
-        
         const candidateElement = document.createElement('div');
         candidateElement.classList.add('outer-box');
-        
-        // Use the correct path for the candidate image
-        const imageUrl = candidate && candidate.candidate_img && candidate.candidate_img.trim() !== '' 
-            ? `Candidate/${candidate.candidate_img}` 
-            : 'css/pictures/default-ppic.png';
-        
-        console.log('Image URL:', imageUrl); // Debug log
-
         candidateElement.innerHTML = `
             <div class="inner-box">
                 <div class="candidate-img">
-                    <img src='${imageUrl}' alt="Candidate Image" onerror="this.src='css/pictures/default-ppic.png';">
+                    <img src='${candidate.candidate_img ? candidate.candidate_img : 'css/pictures/default-ppic.png'}' alt="Candidate Image">
                 </div>
                 <div class="candidate-info">
-                    <p class="name">${candidate && candidate.name ? candidate.name : 'No Name'}</p>
-                    <p class="party">Party List: ${candidate && candidate.party ? candidate.party : 'No Party'}</p>
+                    <p class="name">${candidate.name}</p>
+                    <p class="party">Party List: ${candidate.party}</p>
                 </div>
             </div>
         `;
@@ -65,16 +55,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     }
 
-    // Debug: Log localStorage contents
-    console.log('localStorage contents:');
-    console.log('selectedPresident:', localStorage.getItem('selectedPresident'));
-    console.log('selectedVicePresident:', localStorage.getItem('selectedVicePresident'));
-    console.log('selectedCouncilors:', localStorage.getItem('selectedCouncilors'));
-
     // Load selected candidates from localStorage
-    const selectedPresident = JSON.parse(localStorage.getItem('selectedPresident') || 'null');
-    const selectedVicePresident = JSON.parse(localStorage.getItem('selectedVicePresident') || 'null');
-    const selectedCouncilors = JSON.parse(localStorage.getItem('selectedCouncilors') || '[]');
+    const selectedPresident = JSON.parse(localStorage.getItem('selectedPresident'));
+    const selectedVicePresident = JSON.parse(localStorage.getItem('selectedVicePresident'));
+    const selectedCouncilors = JSON.parse(localStorage.getItem('selectedCouncilors'));
 
     console.log('Selected President:', selectedPresident);
     console.log('Selected Vice President:', selectedVicePresident);
