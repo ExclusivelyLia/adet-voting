@@ -39,6 +39,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $currentDateTime = new DateTime();
         $deadlineDateTime = new DateTime($votingDeadline);
         
+        // Adjusting the deadline to 23:59:59 of the deadline day for accurate comparison
+        $deadlineDateTime->setTime(23, 59, 59);
+
         if ($currentDateTime > $deadlineDateTime) {
             throw new Exception("Voting deadline has passed. You cannot submit your vote.");
         }

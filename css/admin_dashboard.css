@@ -270,14 +270,14 @@ pwedeng yung form na agad yung i-display */
 /* Dito dapat ma-display yung Election Status in both
  student and admin dashboard, idk if sa backend 'yon */
 .box-2 {
-    width: 1600%;
+    width: 100%;
     height: 63px;
     background-color: #13072E;
 }
 
 /* Voting End Time or Deadline */
 .box-3 {
-    width: 1600%; /* taas di'ba ayaw gumana e hshsh*/
+    width: 100%; /* taas di'ba ayaw gumana e hshsh*/
     height: 63px;
     background-color: #964064;
     margin-top: 20px;
