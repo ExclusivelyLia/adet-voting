@@ -37,7 +37,7 @@ function confirmCreate() {
     .then(data => {
         if (data.success) {
             alert(data.success);
-            window.location.href = 'student_record.html';
+            window.location.href = 'student_add.html';
         } else {
             if (data.error && data.error.includes('Duplicate entry')) {
                 alert('Student ID already exists. Please choose a different ID.');

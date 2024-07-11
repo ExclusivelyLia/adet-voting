@@ -72,24 +72,33 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to populate students table
     function populateStudentsTable(students) {
         const tableBody = document.getElementById("candidatesTableBody");
-        tableBody.innerHTML = "";
+        tableBody.innerHTML = ""; // Clear the table body first
 
         students.forEach(student => {
-            let row = "<tr>";
-            row += `<td>${student.student_id || ''}</td>`;
-            row += `<td>${student.student_fname || ''}</td>`;
-            row += `<td>${student.student_mname || ''}</td>`;
-            row += `<td>${student.student_lname || ''}</td>`;
-            row += `<td>${student.student_year || ''}</td>`;
-            row += `<td>${student.student_section || ''}</td>`;
-            row += `<td>${student.student_program || ''}</td>`;
-            row += `<td>${student.birth_date || ''}</td>`;
-            row += `<td>${student.student_email || ''}</td>`;
-            row += `<td>
-                        <button class="delete-button" data-student-id="${student.student_id}">Delete</button>
-                    </td>`;
-            row += "</tr>";
-            tableBody.innerHTML += row;
+            let row = document.createElement("tr");
+
+            // Create each cell and append to the row
+            row.innerHTML += `<td>${student.student_id || ''}</td>`;
+            row.innerHTML += `<td>${student.student_fname || ''}</td>`;
+            row.innerHTML += `<td>${student.student_mname || ''}</td>`;
+            row.innerHTML += `<td>${student.student_lname || ''}</td>`;
+            row.innerHTML += `<td>${student.student_year || ''}</td>`;
+            row.innerHTML += `<td>${student.student_section || ''}</td>`;
+            row.innerHTML += `<td>${student.student_program || ''}</td>`;
+            row.innerHTML += `<td>${student.birth_date || ''}</td>`;
+            row.innerHTML += `<td>${student.student_email || ''}</td>`;
+
+            // Create the delete button and append to last cell
+            let deleteButton = document.createElement("button");
+            deleteButton.classList.add("delete-button");
+            deleteButton.dataset.studentId = student.student_id;
+            deleteButton.textContent = "Delete";
+            let cell = document.createElement("td");
+            cell.appendChild(deleteButton);
+            row.appendChild(cell);
+
+            // Append the row to the table body
+            tableBody.appendChild(row);
         });
     }
 
@@ -112,14 +121,16 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 if (data.success) {
                     console.log(`Student with ID ${studentId} deleted successfully.`);
-                    // Refresh the student table
-                    fetchStudents()
-                        .then(students => {
-                            populateStudentsTable(students);
-                        })
-                        .catch(error => {
-                            console.error('Error fetching initial students:', error);
-                        });
+                    // Remove the deleted row from the table
+                    const rowToDelete = document.querySelector(`tr[data-student-id="${studentId}"]`);
+                    if (rowToDelete) {
+                        rowToDelete.remove();
+                    } else {
+                        console.error(`Row with student ID ${studentId} not found.`);
+                    }
+
+                    // After deletion, refresh the table according to current filter
+                    refreshTable();
                 } else {
                     console.error(`Error deleting student with ID ${studentId}: ${data.message}`);
                 }
@@ -129,7 +140,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     }
-    
 
     // Function to handle filter button click
     function handleFilterButtonClick() {
@@ -150,6 +160,17 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .catch(error => {
                 console.error('Error fetching students:', error);
+            });
+    }
+
+    // Function to refresh table after deletion or filter change
+    function refreshTable() {
+        fetchStudents()
+            .then(students => {
+                populateStudentsTable(students);
+            })
+            .catch(error => {
+                console.error('Error fetching students for table refresh:', error);
             });
     }
 });

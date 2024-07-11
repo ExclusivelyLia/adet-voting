@@ -56,9 +56,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 //Server settings
                 $mail->isSMTP();
                 $mail->Host = 'smtp.gmail.com'; // Gmail SMTP server
+                $mail->SMTPSecure = false;
                 $mail->SMTPAuth = true;
                 $mail->Username = 'electovote@gmail.com'; // Your Gmail address
-                $mail->Password = 'bugr naqs bdwp lukn'; // Your Gmail password
+                $mail->Password = 'wjur pblg ymbq icja'; // Your Gmail password
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port = 587;
 
