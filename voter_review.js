@@ -118,7 +118,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 // Redirect to submitted alert page
                 window.location.href = 'submitted_alert.html';
             } else {
-                alert('Error: ' + (data.message || 'Unknown error occurred'));
+                if (data.message.includes('voting deadline')) {
+                    alert(data.message); // Show the specific error message from the server
+                } else {
+                    alert('Error: ' + (data.message || 'Unknown error occurred'));
+                }
             }
         })
         .catch(error => {

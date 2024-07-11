@@ -28,15 +28,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $response = ["success" => false, "message" => "An error occurred while processing your vote."];
 
     try {
+        // Fetch the voting deadline from the database
+        $stmt = $conn->prepare("SELECT voting_deadline FROM election_settings WHERE setting_id = 1");
+        $stmt->execute();
+        $stmt->bind_result($votingDeadline);
+        $stmt->fetch();
+        $stmt->close();
+
+        // Check if the voting deadline has passed
+        $currentDateTime = new DateTime();
+        $deadlineDateTime = new DateTime($votingDeadline);
+        
+        if ($currentDateTime > $deadlineDateTime) {
+            throw new Exception("Voting deadline has passed. You cannot submit your vote.");
+        }
+
+        // Continue with the vote submission process
         $data = json_decode(file_get_contents("php://input"));
 
         if (!isset($data->presidentVote) || !isset($data->vicePresidentVote) || !isset($data->councilorVotes)) {
             throw new Exception("Invalid JSON format or missing required fields.");
         }
-
-        $presidentVote = $data->presidentVote;
-        $vicePresidentVote = $data->vicePresidentVote;
-        $councilorVotes = $data->councilorVotes;
 
         // Verify Student ID exists in the student table
         $stmt = $conn->prepare("SELECT COUNT(*) FROM student WHERE student_id = ?");
@@ -65,9 +77,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $conn->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
 
         // Insert President vote
-        if (!is_null($presidentVote)) {
+        if (!is_null($data->presidentVote)) {
             $stmt = $conn->prepare("INSERT INTO vote (student_id, candidate_id, date_voted) VALUES (?, ?, NOW())");
-            $stmt->bind_param("si", $_SESSION['student_id'], $presidentVote);  // Note the "s" for string student_id
+            $stmt->bind_param("si", $_SESSION['student_id'], $data->presidentVote);  // Note the "s" for string student_id
             if (!$stmt->execute()) {
                 throw new Exception("Failed to insert President vote: " . $stmt->error);
             }
@@ -75,9 +87,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // Insert Vice President vote
-        if (!is_null($vicePresidentVote)) {
+        if (!is_null($data->vicePresidentVote)) {
             $stmt = $conn->prepare("INSERT INTO vote (student_id, candidate_id, date_voted) VALUES (?, ?, NOW())");
-            $stmt->bind_param("si", $_SESSION['student_id'], $vicePresidentVote);  // Note the "s" for string student_id
+            $stmt->bind_param("si", $_SESSION['student_id'], $data->vicePresidentVote);  // Note the "s" for string student_id
             if (!$stmt->execute()) {
                 throw new Exception("Failed to insert Vice President vote: " . $stmt->error);
             }
@@ -85,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // Insert Councilor votes
-        foreach ($councilorVotes as $councilorVote) {
+        foreach ($data->councilorVotes as $councilorVote) {
             $stmt = $conn->prepare("INSERT INTO vote (student_id, candidate_id, date_voted) VALUES (?, ?, NOW())");
             $stmt->bind_param("si", $_SESSION['student_id'], $councilorVote);  // Note the "s" for string student_id
             if (!$stmt->execute()) {

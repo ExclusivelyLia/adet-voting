@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
     studentsTableBody.addEventListener('click', function(event) {
         if (event.target.classList.contains('delete-button')) {
             const studentId = event.target.dataset.studentId;
+            console.log(`Attempting to delete student with ID: ${studentId}`);
             deleteStudent(studentId);
         }
     });
@@ -71,11 +72,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Function to populate students table
     function populateStudentsTable(students) {
-        const tableBody = document.getElementById("candidatesTableBody");
-        tableBody.innerHTML = ""; // Clear the table body first
+        studentsTableBody.innerHTML = ""; // Clear the table body first
 
         students.forEach(student => {
             let row = document.createElement("tr");
+            row.dataset.studentId = student.student_id; // Store the student ID in the row's data attribute
 
             // Create each cell and append to the row
             row.innerHTML += `<td>${student.student_id || ''}</td>`;
@@ -98,48 +99,47 @@ document.addEventListener('DOMContentLoaded', function() {
             row.appendChild(cell);
 
             // Append the row to the table body
-            tableBody.appendChild(row);
+            studentsTableBody.appendChild(row);
         });
     }
 
     // Function to delete student
-    function deleteStudent(studentId) {
-        if (confirm("Are you sure you want to delete this student?")) {
-            fetch(`student_delete.php`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: `id=${studentId}`,
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    console.log(`Student with ID ${studentId} deleted successfully.`);
-                    // Remove the deleted row from the table
-                    const rowToDelete = document.querySelector(`tr[data-student-id="${studentId}"]`);
-                    if (rowToDelete) {
-                        rowToDelete.remove();
-                    } else {
-                        console.error(`Row with student ID ${studentId} not found.`);
-                    }
-
-                    // After deletion, refresh the table according to current filter
-                    refreshTable();
-                } else {
-                    console.error(`Error deleting student with ID ${studentId}: ${data.message}`);
-                }
-            })
-            .catch(error => {
-                console.error('Error deleting student:', error);
-            });
-        }
+function deleteStudent(studentId) {
+    if (confirm("Are you sure you want to delete this student?")) {
+        fetch(`student_delete.php`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `id=${studentId}`,
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                console.log(`Student with ID ${studentId} deleted successfully.`);
+                // Refresh the student table
+                fetchStudents()
+                    .then(students => {
+                        populateStudentsTable(students);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching students:', error);
+                    });
+            } else {
+                console.error(`Error deleting student with ID ${studentId}: ${data.message}`);
+            }
+        })
+        .catch(error => {
+            console.error('Error deleting student:', error);
+        });
     }
+}
+
 
     // Function to handle filter button click
     function handleFilterButtonClick() {

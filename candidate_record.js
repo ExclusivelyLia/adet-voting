@@ -220,32 +220,34 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Function to set voting deadline
-function setVotingDeadline(deadline) {
-    fetch('set_voting_deadline.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ deadline: deadline })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Failed to set voting deadline');
-        }
-        return response.json(); // Assuming PHP script returns JSON
-    })
-    .then(data => {
-        if (data.success) {
-            console.log('Voting deadline set successfully');
-            // Optionally, show a notification to the user
-            alert('Voting deadline updated successfully');
-        } else {
-            console.error('Error setting voting deadline:', data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error setting voting deadline:', error);
-    });
-}
-
+    function setVotingDeadline(deadline) {
+        console.log('Setting voting deadline to:', deadline); // Debugging log
+    
+        fetch('set_voting_deadline.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ deadline: deadline })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to set voting deadline');
+            }
+            return response.json(); // Assuming PHP script returns JSON
+        })
+        .then(data => {
+            if (data.success) {
+                console.log('Voting deadline set successfully');
+                // Optionally, show a notification to the user
+                alert('Voting deadline updated successfully');
+            } else {
+                console.error('Error setting voting deadline:', data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error setting voting deadline:', error);
+        });
+    }
+    
 });
