@@ -1,95 +1,116 @@
 <?php
-session_start(); // Ensure session is started to access $_SESSION variables
-
+session_start();
 include 'db_connection.php';
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+error_log('Session data: ' . print_r($_SESSION, true));
+
+if (!isset($_SESSION['student_id'])) {
+    echo json_encode(["success" => false, "message" => "User not logged in."]);
+    exit();
+}
+
+if (empty($_SESSION['student_id'])) {
+    echo json_encode(["success" => false, "message" => "Student ID is empty. Please log in again."]);
+    exit();
+}
+
+if ($conn->connect_error) {
+    echo json_encode(["success" => false, "message" => "Database connection failed: " . $conn->connect_error]);
+    exit();
+}
+
+$conn->set_charset("utf8mb4");
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Decode JSON data from the request body
-    $data = json_decode(file_get_contents("php://input"));
+    $response = ["success" => false, "message" => "An error occurred while processing your vote."];
 
-    // Extract data from JSON
-    $presidentVote = $data->presidentVote ?? null;
-    $vicePresidentVote = $data->vicePresidentVote ?? null;
-    $councilorVotes = $data->councilorVotes ?? [];
+    try {
+        $data = json_decode(file_get_contents("php://input"));
 
-    // Example of inserting data into the 'vote' table
-    // Ensure to use prepared statements to prevent SQL injection
-
-    // Insert President vote
-    if ($presidentVote) {
-        $stmt = $conn->prepare("INSERT INTO vote (student_id, candidate_id, date_voted) VALUES (?, ?, NOW())");
-        $stmt->bind_param("ii", $_SESSION['student_id'], $presidentVote);
-        $stmt->execute();
-        $stmt->close();
-    }
-
-    // Insert Vice President vote
-    if ($vicePresidentVote) {
-        $stmt = $conn->prepare("INSERT INTO vote (student_id, candidate_id, date_voted) VALUES (?, ?, NOW())");
-        $stmt->bind_param("ii", $_SESSION['student_id'], $vicePresidentVote);
-        $stmt->execute();
-        $stmt->close();
-    }
-
-    // Insert Councilor votes
-    foreach ($councilorVotes as $councilorVote) {
-        $stmt = $conn->prepare("INSERT INTO vote (student_id, candidate_id, date_voted) VALUES (?, ?, NOW())");
-        $stmt->bind_param("ii", $_SESSION['student_id'], $councilorVote);
-        $stmt->execute();
-        $stmt->close();
-    }
-
-    // Fetch details of selected candidates after voting
-    $selectedCandidates = [];
-
-    // Fetch President candidate details
-    if ($presidentVote) {
-        $stmt = $conn->prepare("SELECT candidate_id, candidate_fname, candidate_lname, party_list, candidate_img FROM candidate WHERE candidate_id = ?");
-        $stmt->bind_param("i", $presidentVote);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            $selectedCandidates['president'] = $result->fetch_assoc();
+        if (!isset($data->presidentVote) || !isset($data->vicePresidentVote) || !isset($data->councilorVotes)) {
+            throw new Exception("Invalid JSON format or missing required fields.");
         }
-        $stmt->close();
-    }
 
-    // Fetch Vice President candidate details
-    if ($vicePresidentVote) {
-        $stmt = $conn->prepare("SELECT candidate_id, candidate_fname, candidate_lname, party_list, candidate_img FROM candidate WHERE candidate_id = ?");
-        $stmt->bind_param("i", $vicePresidentVote);
+        $presidentVote = $data->presidentVote;
+        $vicePresidentVote = $data->vicePresidentVote;
+        $councilorVotes = $data->councilorVotes;
+
+        // Verify Student ID exists in the student table
+        $stmt = $conn->prepare("SELECT COUNT(*) FROM student WHERE student_id = ?");
+        $stmt->bind_param("s", $_SESSION['student_id']);  // Note the "s" for string parameter
         $stmt->execute();
-        $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            $selectedCandidates['vicePresident'] = $result->fetch_assoc();
-        }
+        $stmt->bind_result($studentExists);
+        $stmt->fetch();
         $stmt->close();
-    }
 
-    // Fetch Councilors candidate details
-    if (!empty($councilorVotes)) {
-        $councilorDetails = [];
-        foreach ($councilorVotes as $councilorVote) {
-            $stmt = $conn->prepare("SELECT candidate_id, candidate_fname, candidate_lname, party_list, candidate_img FROM candidate WHERE candidate_id = ?");
-            $stmt->bind_param("i", $councilorVote);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            if ($result->num_rows > 0) {
-                $councilorDetails[] = $result->fetch_assoc();
+        if (!$studentExists) {
+            throw new Exception("Invalid student ID. Please log in again.");
+        }
+
+        // Check for duplicate votes
+        $stmt = $conn->prepare("SELECT COUNT(*) FROM vote WHERE student_id = ?");
+        $stmt->bind_param("s", $_SESSION['student_id']);  // Note the "s" for string parameter
+        $stmt->execute();
+        $stmt->bind_result($count);
+        $stmt->fetch();
+        $stmt->close();
+
+        if ($count > 0) {
+            throw new Exception("You have already voted.");
+        }
+
+        $conn->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
+
+        // Insert President vote
+        if (!is_null($presidentVote)) {
+            $stmt = $conn->prepare("INSERT INTO vote (student_id, candidate_id, date_voted) VALUES (?, ?, NOW())");
+            $stmt->bind_param("si", $_SESSION['student_id'], $presidentVote);  // Note the "s" for string student_id
+            if (!$stmt->execute()) {
+                throw new Exception("Failed to insert President vote: " . $stmt->error);
             }
             $stmt->close();
         }
-        $selectedCandidates['councilors'] = $councilorDetails;
+
+        // Insert Vice President vote
+        if (!is_null($vicePresidentVote)) {
+            $stmt = $conn->prepare("INSERT INTO vote (student_id, candidate_id, date_voted) VALUES (?, ?, NOW())");
+            $stmt->bind_param("si", $_SESSION['student_id'], $vicePresidentVote);  // Note the "s" for string student_id
+            if (!$stmt->execute()) {
+                throw new Exception("Failed to insert Vice President vote: " . $stmt->error);
+            }
+            $stmt->close();
+        }
+
+        // Insert Councilor votes
+        foreach ($councilorVotes as $councilorVote) {
+            $stmt = $conn->prepare("INSERT INTO vote (student_id, candidate_id, date_voted) VALUES (?, ?, NOW())");
+            $stmt->bind_param("si", $_SESSION['student_id'], $councilorVote);  // Note the "s" for string student_id
+            if (!$stmt->execute()) {
+                throw new Exception("Failed to insert Councilor vote: " . $stmt->error);
+            }
+            $stmt->close();
+        }
+
+        $conn->commit();
+
+        $response = ["success" => true, "message" => "Vote submitted successfully."];
+    } catch (Exception $e) {
+        $conn->rollback();
+        error_log('Error in submit_vote.php for student_id ' . $_SESSION['student_id'] . ': ' . $e->getMessage() . ' | Stack trace: ' . $e->getTraceAsString());
+        $response = [
+            "success" => false, 
+            "message" => "An error occurred: " . $e->getMessage(),
+            "student_id" => $_SESSION['student_id']
+        ];
     }
 
-    // Close database connection
-    mysqli_close($conn);
-
-    // Example response
-    echo json_encode(["success" => true, "selectedCandidates" => $selectedCandidates]);
+    header('Content-Type: application/json');
+    echo json_encode($response);
     exit();
 } else {
-    // Handle invalid request method
     http_response_code(405);
     echo json_encode(["error" => "Method Not Allowed"]);
     exit();

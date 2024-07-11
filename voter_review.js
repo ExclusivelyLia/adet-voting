@@ -118,12 +118,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 // Redirect to submitted alert page
                 window.location.href = 'submitted_alert.html';
             } else {
-                alert('Error: ' + data.message);
+                alert('Error: ' + (data.message || 'Unknown error occurred'));
             }
         })
         .catch(error => {
             console.error('Error submitting vote:', error);
-            alert('An error occurred while submitting your vote. Please try again.');
+            alert('An error occurred while submitting your vote: ' + error.message);
         });
     });
 
