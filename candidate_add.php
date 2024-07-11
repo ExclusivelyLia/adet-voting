@@ -1,6 +1,13 @@
 <?php
 include 'db_connection.php';
 
+// Define position limits
+$positionLimits = array(
+    '1' => 1,  // President
+    '2' => 1,  // Vice President
+    '3' => 6   // Councilor
+);
+
 // Check if form data is submitted via POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Collect form data
@@ -35,6 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Check if position limit is exceeded for this position
         if (isset($positionLimits[$positionId])) {
+            $stmt->bind_param("si", $trimmedPartyListItem, $positionId);
             $stmt->execute();
             $result = $stmt->get_result();
             $row = $result->fetch_assoc();

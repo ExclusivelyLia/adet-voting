@@ -128,7 +128,7 @@ body {
 }
 .create-button {
     position: absolute;
-    bottom: 40px;
+    bottom: 65px;
     left: 640px;
     display: flex;
     justify-content: flex-end;

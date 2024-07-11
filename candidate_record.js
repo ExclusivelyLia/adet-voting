@@ -64,6 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
             onChange: function(selectedDates, dateStr, instance) {
                 votingEndButton.innerHTML = 
                     '<i class="fa-solid fa-calendar-days" style="color: #e2e2e2;"></i> ' + dateStr;
+                setVotingDeadline(dateStr); // Call function to set voting deadline
             },
             appendTo: flatpickrContainer,
             position: "below"
@@ -75,14 +76,6 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         console.error('Date picker elements not found in the DOM.');
     }
-
-    // Event delegation for delete buttons
-    candidatesTableBody.addEventListener('click', function(event) {
-        if (event.target.classList.contains('delete-button')) {
-            const candidateId = event.target.dataset.candidateId;
-            deleteCandidate(candidateId);
-        }
-    });
 
     // Function to fetch candidates
     function fetchCandidates() {
@@ -225,4 +218,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
         return sortedCandidates;
     }
+
+    // Function to set voting deadline
+function setVotingDeadline(deadline) {
+    fetch('set_voting_deadline.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ deadline: deadline })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to set voting deadline');
+        }
+        return response.json(); // Assuming PHP script returns JSON
+    })
+    .then(data => {
+        if (data.success) {
+            console.log('Voting deadline set successfully');
+            // Optionally, show a notification to the user
+            alert('Voting deadline updated successfully');
+        } else {
+            console.error('Error setting voting deadline:', data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error setting voting deadline:', error);
+    });
+}
+
 });
