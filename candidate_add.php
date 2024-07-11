@@ -1,13 +1,6 @@
 <?php
 include 'db_connection.php';
 
-// Define position limits (assuming these are predefined in your application)
-$positionLimits = [
-    '1' => 1, // President
-    '2' => 1, // Vice President
-    '3' => 6  // Councilor
-];
-
 // Check if form data is submitted via POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Collect form data
@@ -76,6 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             // Echo success response
             $response = array('success' => 'New candidate added successfully');
+            echo json_encode($response);
         } else {
             $response = array('error' => 'Sorry, there was an error uploading your file.');
             echo json_encode($response);
