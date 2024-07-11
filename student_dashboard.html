@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="css/student_dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="sidebar">
+        <img src="css/pictures/ElectoVote_logo.png" alt="Logo" class="logo">
+        <a href="#" class="active">
+            <div class="icon-label">
+                <img src="css/pictures/dashboard_icn.png" alt="Dashboard Icon" class="icon">
+                <span>Dashboard</span>
+            </div>
+        </a>
+        <a href="voter_rules.html">
+            <div class="icon-label">
+                <img src="css/pictures/CastVote_icn.png" alt="Cast Vote" class="icon">
+                <span>Cast Vote</span>
+            </div>
+        </a>
+        <a href="about_us.html">
+            <div class="icon-label">
+                <img src="css/pictures/AboutUs_icn.png" alt="About Us Icon" class="icon">
+                <span>About Us</span>
+            </div>
+        </a>
+        <div class="logout-container">
+            <a href="login_page.html" class="logout-btn">
+                <div class="icon-label">
+                    <img src="css/pictures/Logout_icn.png" alt="Logout Icon" class="icon">
+                    <span>Logout</span>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="dashboard" id="dashboard">
+        <h1 class="dashboard-title">Dashboard</h1>
+        <div class="row">
+            <div class="box box-1">
+                <div>
+                    <h2>Welcome to ElectoVote CCISkolars!</h2>
+                    <h4>Together, let's shape the future of our academic community.</h4>
+                </div>
+                <img src="css/pictures/ballot.png" alt="Manage Election Icon">
+            </div>
+            <div>
+                <div class="box box-2"></div>
+                <div class="box box-3">
+                    <img src="css/pictures/voting_end_time_icn.png" alt="Voting End Time">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="box box-4">
+                <span class="label-main">Current Vote Counts</span>
+                <div class="view-more">
+                    <img src="css/pictures/view_vote_count.png" alt="View Vote Count">
+                    <span class="label-sub">Real-time update of the votes cast for each candidate.</span>
+                </div>
+                <div class="view-more-bottom">
+                    <span>View More</span>
+                    <img src="css/pictures/view_more.png" alt="View More">
+                </div>
+            </div>            
+            <div class="box box-5">
+                <img src="css/pictures/announcement_icn.png" alt="Announcement Icon" class="main-icon">
+                <img src="css/pictures/announcement2_icn.png" alt="Announcement Icon" class="top-icon">
+                <span class="announcement-label">See the latest announcement here.</span>
+            </div>
+            <div class="box box-6">
+                <canvas id="trafficChart" width="80" height="80"></canvas>
+                <div id="totalVoters" class="total-voters"></div>
+                <div class="chart-legend">
+                    <div class="legend-item">
+                        <span class="legend-color" style="background-color: #4C6DD3;"></span>
+                        <span>Computer Science</span>
+                        <span>0</span> <!-- Initial placeholder for vote count -->
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background-color: #B7ACDB;"></span>
+                        <span>Information Technology</span>
+                        <span>0</span> <!-- Initial placeholder for vote count -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('fetch_vote_counts.php')
+                .then(response => response.json())
+                .then(data => {
+                    let bscsVotes = 0;
+                    let bsitVotes = 0;
+                    
+                    data.forEach(vote => {
+                        if (vote.student_program === 'BSCS') {
+                            bscsVotes = parseInt(vote.vote_count);
+                        } else if (vote.student_program === 'BSIT') {
+                            bsitVotes = parseInt(vote.vote_count);
+                        }
+                    });
+
+                    // Update the chart legend
+                    const legendItems = document.querySelectorAll('.legend-item');
+                    legendItems[0].children[2].textContent = bscsVotes;
+                    legendItems[1].children[2].textContent = bsitVotes;
+
+                    // Update the chart
+                    const ctx = document.getElementById('trafficChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Computer Science', 'Information Technology'],
+                            datasets: [{
+                                data: [bscsVotes, bsitVotes],
+                                backgroundColor: ['#4C6DD3', '#B7ACDB'],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            legend: {
+                                display: false
+                            }
+                        }
+                    });
+
+                    // Update the total voters count
+                    const totalVoters = bscsVotes + bsitVotes;
+                    document.getElementById('totalVoters').textContent = `Total Voters: ${totalVoters}`;
+                })
+                .catch(error => console.error('Error fetching vote data:', error));
+        });
+    </script>
+</body>
+</html>

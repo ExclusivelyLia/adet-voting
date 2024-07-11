@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if candidate ID already exists
     $checkQuery = "SELECT * FROM candidate WHERE candidate_id = ?";
     $stmt = $conn->prepare($checkQuery);
-    $stmt->bind_param("s", $candidateId);
+    $stmt->bind_param("s", $candidateId); // Bind as string
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -71,12 +71,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $sql = "INSERT INTO candidate (candidate_id, candidate_fname, candidate_mname, candidate_lname, party_list, position_id, candidate_img) 
                     VALUES (?, ?, ?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("issssis", $candidateId, $candidateFname, $candidateMname, $candidateLname, $partyListItem, $positionId, $fileName);
+            $stmt->bind_param("sssssis", $candidateId, $candidateFname, $candidateMname, $candidateLname, $partyListItem, $positionId, $fileName);
             $stmt->execute();
             
             // Echo success response
             $response = array('success' => 'New candidate added successfully');
-            echo json_encode($response);
         } else {
             $response = array('error' => 'Sorry, there was an error uploading your file.');
             echo json_encode($response);
@@ -86,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql = "INSERT INTO candidate (candidate_id, candidate_fname, candidate_mname, candidate_lname, party_list, position_id) 
                 VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("issssi", $candidateId, $candidateFname, $candidateMname, $candidateLname, $partyListItem, $positionId);
+        $stmt->bind_param("sssssi", $candidateId, $candidateFname, $candidateMname, $candidateLname, $partyListItem, $positionId);
         $stmt->execute();
 
         // Echo success response

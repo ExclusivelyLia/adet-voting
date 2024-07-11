@@ -1,0 +1,20 @@
+/* Page title */
+.page-title {
+    font-size: 30px;
+    font-weight: 800;
+    color: #E2D3FF;
+    margin-bottom: 15px; 
+    margin-left: 98px;
+    padding: 19px;
+    transition: margin-left 0.3s ease; 
+}
+
+@media (max-width: 80px) {
+    .page-title {
+        margin-left: 80px;
+    }
+}
+
+.sidebar:hover ~ .page-title {
+    margin-left: 200px;
+}

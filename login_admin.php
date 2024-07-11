@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Start a session and redirect to the admin dashboard
         session_start();
         $_SESSION['admin_username'] = $username;
-        header("Location: test_admindashboard.html");  
+        header("Location: admin_dashboard.html");  
         exit();
     } else {
         // Login failed, redirect back
