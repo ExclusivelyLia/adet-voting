@@ -8,6 +8,53 @@
     <link rel="stylesheet" href="css/admin_dashboard.css">
     <link rel="stylesheet" href="css/about.css">
 </head>
+    <style>
+        body {
+            font-family: 'Poppins';
+            display: flex;
+            color: white;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+            background: url(css/pictures/bg-aboutUS.png);
+            background-size: cover;
+        }
+        .container {
+            width: 75%;
+            height: 70%;
+            padding: 40px;
+            background-color: #13072e00;
+            border-radius: 40px;
+            position: absolute;
+            top: 150px;
+            right: 40px;
+        }
+        .about-container {
+            position: absolute;
+            width: 100%;
+            top: 50px;
+        }
+        .about-us {
+            width: 70%;
+            position: absolute;
+            padding: 10px;
+            left: 120px;
+            top: 150px;
+        }
+        .about-us p {
+            text-align: justify;
+            font-size: 22px;
+        }
+        .electovote {
+            width: 530px;
+            height: 100px;
+            position: absolute;
+
+        }
+    </style>
+</head>
 <body>
     <div class="sidebar">
         <img src="css/pictures/ElectoVote_logo.png" alt="ElectoVote Logo" class="logo">
@@ -17,13 +64,13 @@
                 <span>Dashboard</span>
             </div>
         </a>
-        <a href="candidates.html">
+        <a href="candidate_record.html">
             <div class="icon-label">
                 <img src="css/pictures/Candidates_icn.png" alt="Candidates Icon" class="icon">
                 <span>Candidate</span>
             </div>
         </a>
-        <a href="students.html">
+        <a href="student_record.html">
             <div class="icon-label">
                 <img src="css/pictures/Student_icn.png" alt="Students Icon" class="icon">
                 <span>Students</span>
@@ -51,7 +98,15 @@
         </div>
     </div>
 
-    <h1 class="page-title">About ElectoVote</h1>
+    <div class="container">
+        <div class="about-container">
+            <img class="electovote" src="css/pictures/text-electovote.png" alt="ElectoVote">
+        </div>
+        <div class="about-us">
+            <p>ElectoVote is a dedicated platform customized for the College of Computer and Information Sciences at the Polytechnic University of the Philippines.</p>
+            <p>Our mission is to facilitate transparent and accessible elections, fostering democratic engagement and empowering students to actively participate in shaping the direction of our academic community. 
+                With a commitment to fairness, integrity, and innovation, ElectoVote strives to uphold the values of inclusivity and excellence in student governance.</p>
+        </div>
 
 </body>
 </html>
