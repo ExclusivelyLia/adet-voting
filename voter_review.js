@@ -6,11 +6,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
         candidateElement.innerHTML = `
             <div class="inner-box">
                 <div class="candidate-img">
-                    <img src='${candidate.candidate_img ? candidate.candidate_img : 'css/pictures/default-ppic.png'}' alt="Candidate Image">
+                    <img src="${candidate.candidate_img || 'css/pictures/default-ppic.png'}" alt="Candidate Image" onerror="this.src='css/pictures/default-ppic.png';">
                 </div>
                 <div class="candidate-info">
-                    <p class="name">${candidate.name}</p>
-                    <p class="party">Party List: ${candidate.party}</p>
+                    <p class="name">${candidate.candidate_fname} ${candidate.candidate_lname}</p>
+                    <p class="party">Party List: ${candidate.party_list}</p>
                 </div>
             </div>
         `;
@@ -33,15 +33,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
             const presidentElement = createCandidateElement(selectedCandidates.president);
             presidentContainer.appendChild(presidentElement);
         } else {
-            console.warn('No President selected');
+            presidentContainer.innerHTML = '<p>No President selected</p>';
         }
 
         // Populate Vice President
-        if (selectedCandidates.vicePresident) {
-            const vicePresidentElement = createCandidateElement(selectedCandidates.vicePresident);
+        if (selectedCandidates.vice_president) {
+            const vicePresidentElement = createCandidateElement(selectedCandidates.vice_president);
             vicePresidentContainer.appendChild(vicePresidentElement);
         } else {
-            console.warn('No Vice President selected');
+            vicePresidentContainer.innerHTML = '<p>No Vice President selected</p>';
         }
 
         // Populate Councilors
@@ -51,25 +51,45 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 councilorsContainer.appendChild(councilorElement);
             });
         } else {
-            console.warn('No Councilors selected');
+            councilorsContainer.innerHTML = '<p>No Councilors selected</p>';
         }
     }
 
     // Load selected candidates from localStorage
     const selectedPresident = JSON.parse(localStorage.getItem('selectedPresident'));
     const selectedVicePresident = JSON.parse(localStorage.getItem('selectedVicePresident'));
-    const selectedCouncilors = JSON.parse(localStorage.getItem('selectedCouncilors'));
+    const selectedCouncilors = JSON.parse(localStorage.getItem('selectedCouncilors')) || [];
 
     console.log('Selected President:', selectedPresident);
     console.log('Selected Vice President:', selectedVicePresident);
     console.log('Selected Councilors:', selectedCouncilors);
 
-    // Display selected candidates on page load
-    displaySelectedCandidates({
-        president: selectedPresident,
-        vicePresident: selectedVicePresident,
-        councilors: selectedCouncilors
+    // Fetch selected candidates from the server
+    const selectedPresidentId = selectedPresident ? selectedPresident.id : null;
+    const selectedVicePresidentId = selectedVicePresident ? selectedVicePresident.id : null;
+    const selectedCouncilorIds = selectedCouncilors.map(c => c.id);
+
+    const queryParams = new URLSearchParams({
+        selectedPresidentId: selectedPresident ? selectedPresidentId : '',
+        selectedVicePresidentId: selectedVicePresident ? selectedVicePresidentId : '',
+        selectedCouncilorIds: JSON.stringify(selectedCouncilorIds)
     });
+
+    fetch(`fetch_candidates.php?${queryParams}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Fetched Candidates:', data);
+            displaySelectedCandidates(data);
+        })
+        .catch(error => {
+            console.error('Error fetching selected candidates:', error);
+            alert('An error occurred while fetching candidates. Please try again.');
+        });
 
     // Submit Button Event
     document.getElementById('submitButton').addEventListener('click', function() {
@@ -83,21 +103,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
             body: JSON.stringify({
                 presidentVote: selectedPresident ? selectedPresident.id : null,
                 vicePresidentVote: selectedVicePresident ? selectedVicePresident.id : null,
-                councilorVotes: selectedCouncilors ? selectedCouncilors.map(c => c.id) : []
+                councilorVotes: selectedCouncilors.map(c => c.id)
             })
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
             console.log('Response:', data);
             if (data.success) {
-                // Update localStorage with selected candidates after voting
-                localStorage.setItem('selectedPresident', JSON.stringify(selectedPresident));
-                localStorage.setItem('selectedVicePresident', JSON.stringify(selectedVicePresident));
-                localStorage.setItem('selectedCouncilors', JSON.stringify(selectedCouncilors));
-
-                // Display selected candidates on successful submission
-                displaySelectedCandidates(data.selectedCandidates);
-
                 // Redirect to submitted alert page
                 window.location.href = 'submitted_alert.html';
             } else {
