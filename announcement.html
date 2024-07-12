@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Announcement</title>
+    <link rel="icon" href="ElectoVote_logo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/announcement.css">
+    <style>
+        /* Additional CSS styles specific to this page can be added here */
+        body {
+            background-image: url('css/pictures/Dashboard_background.png');
+            /* Ensure the path to the background image is correct */
+        }
+    </style>
+</head>
+<body>
+    <h1>Announcement</h1>
+    <div class="container">
+        <div class="shape1">
+            <img src="css/pictures/heads_up.png" alt="Heads Up Image" class="left-image">
+            <div class="labels">
+                <p class="label">Heads Up, CCISkolars!</p>
+                <p class="label">We're thrilled to announce the results of the Student Council elections. Thanks to your enthusiastic participation, we have elected a new team of dedicated leaders to represent our community.</p>
+            </div>
+            <img src="css/pictures/close_btn.png" alt="Close Button" class="close-btn" onclick="goBack()">
+        </div>
+        <div class="shape2">
+            <div class="table-container" id="presidentTable">
+                <div class="table-label">President</div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Profile</th>
+                            <th>Candidate Name</th>
+                            <th>Total No. of Votes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="candidatesTableBody1">
+                        <!-- Placeholder rows for President -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-container" id="vicePresidentTable">
+                <div class="table-label">Vice President</div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Profile</th>
+                            <th>Candidate Name</th>
+                            <th>Total No. of Votes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="candidatesTableBody2">
+                        <!-- Placeholder rows for Vice President -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-container" id="councilorsTable">
+                <div class="table-label">Councilors</div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Profile</th>
+                            <th>Candidate Name</th>
+                            <th>Total No. of Votes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="candidatesTableBody3">
+                        <!-- Placeholder rows for Councilors -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        function goBack() {
+            window.location.href = 'election.html'; 
+        }
+    
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('announcement.php')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const presidentTableBody = document.getElementById('candidatesTableBody1');
+                    const vicePresidentTableBody = document.getElementById('candidatesTableBody2');
+                    const councilorTableBody = document.getElementById('candidatesTableBody3');
+    
+                    // Display President
+                    if (data.president_tie) {
+                        data.president_tie.forEach(candidate => {
+                            const presidentRow = createCandidateRow(candidate);
+                            presidentTableBody.appendChild(presidentRow);
+                        });
+                    } else if (data.president) {
+                        const presidentRow = createCandidateRow(data.president);
+                        presidentTableBody.appendChild(presidentRow);
+                    }
+    
+                    // Display Vice President
+                    if (data.vice_president_tie) {
+                        data.vice_president_tie.forEach(candidate => {
+                            const vicePresidentRow = createCandidateRow(candidate);
+                            vicePresidentTableBody.appendChild(vicePresidentRow);
+                        });
+                    } else if (data.vice_president) {
+                        const vicePresidentRow = createCandidateRow(data.vice_president);
+                        vicePresidentTableBody.appendChild(vicePresidentRow);
+                    }
+    
+                    // Display Councilors
+                    if (data.councilors_tie) {
+                        data.councilors_tie.forEach(candidate => {
+                            const councilorRow = createCandidateRow(candidate);
+                            councilorTableBody.appendChild(councilorRow);
+                        });
+                    } else if (data.councilors) {
+                        data.councilors.forEach(candidate => {
+                            const councilorRow = createCandidateRow(candidate);
+                            councilorTableBody.appendChild(councilorRow);
+                        });
+                    }
+                })
+                .catch(error => console.error('Error fetching candidates:', error));
+        });
+    
+        function createCandidateRow(candidate) {
+            const row = document.createElement('tr');
+            const imagePath = candidate.candidate_img === 'default-ppic.png' 
+                ? 'css/pictures/default-ppic.png' 
+                : 'Candidate/' + candidate.candidate_img;
+                
+            row.innerHTML = `
+                <td><img class="profile-pic" src="${imagePath}" alt="Profile Picture"></td>
+                <td>${candidate.candidate_fname} ${candidate.candidate_lname}</td>
+                <td>${candidate.vote_count}</td>
+            `;
+            return row;
+        }
+    </script>
+    
+</body>
+</html>

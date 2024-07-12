@@ -4,9 +4,8 @@
     font-weight: 800;
     color: #E2D3FF;
     margin-bottom: 15px; 
-    margin-left: 98px;
+    margin-left: 100px;
     padding: 19px;
-    transition: margin-left 0.3s ease; 
 }
 
 @media (max-width: 80px) {
@@ -17,4 +16,118 @@
 
 .sidebar:hover ~ .page-title {
     margin-left: 200px;
+}
+
+/* Container for election management */
+.container {
+    background-color: #13072E;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 150px 35px 25px -325px; 
+    width: 1010px; 
+    position: relative;
+    display: flex;
+    justify-content: space-around; 
+    align-items: center; 
+}
+
+/* Dropdown button styles */
+.dropdown-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #312e5d;
+    border: 2px solid #4C6DD3;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-btn img {
+    height: 16px; 
+    margin-right: -10px;
+    cursor: pointer;
+}
+
+.dropdown-btn:hover img {
+    opacity: 0.8;
+}
+
+.dropdown-options {
+    display: none;
+    position: absolute;
+    top: 60px; 
+    right: 20px;
+    background-color: #B7ACDB;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1; 
+}
+
+.dropdown-options a {
+    display: block;
+    padding: 8px 18px;
+    margin: 5px; 
+    color: #13072E;
+    text-decoration: none;
+    border-radius: 30px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px; 
+    font-weight:600;
+}
+
+.dropdown-options a:hover {
+    background-color: #9b8bc7;
+}
+
+.show {
+    display: block;
+}
+
+/* Clickable boxes */
+.box {
+    background-color: #964064;
+    border-radius: 15px;
+    width: 45%; 
+    height: 270px; 
+    margin-bottom: -90px;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    position: relative;
+    z-index: 0; 
+}
+
+.box img {
+    height: 150px;
+    margin: 0 auto; 
+}
+
+.box p {
+    color: #13072E;
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.box .sub-label {
+    color: #13072E;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center; /* Center align the sub-label */
+}
+
+.box:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }

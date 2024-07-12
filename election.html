@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ElectoVote - Election</title>
-    <link rel="icon" href="css/pictures/ElectoVote_logo.ico" type="image/x-icon">
+    <link rel="icon" href="ElectoVote_logo.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/admin_dashboard.css">
     <link rel="stylesheet" href="css/election.css">
 </head>
@@ -53,5 +53,47 @@
 
     <h1 class="page-title">Election Management</h1>
 
+    <div class="container">
+        <button class="dropdown-btn">
+            Set Voting Status
+            <img src="css/pictures/break_it_down.png" alt="Dropdown Icon" class="dropdown-img">
+        </button>
+    
+        <div class="dropdown-options" id="dropdown-options">
+            <a href="#">Election Will Start Very Soon</a>
+            <a href="#">Election Ongoing</a>
+            <a href="#">Election Will End Soon</a>
+            <a href="#">Election Ended</a>
+        </div>
+    
+        <div class="box" onclick="window.location.href='announcement.html'">
+            <p>Manage Announcement</p>
+            <img src="css/pictures/manage_announcement.png" alt="Manage Announcement">
+            <p class="sub-label">Display the newly elected Student Council members.</p>
+        </div>
+        <div class="box" onclick="window.location.href='voting_guidelines.html'">
+            <p>Manage Voting Guidelines</p>
+            <img src="css/pictures/guideline.png" alt="Manage Voting Guidelines">
+            <p class="sub-label">State the voting rules involved in the voting process.</p>
+        </div>
+    </div>    
+
+    <script>
+        document.querySelector('.dropdown-btn').addEventListener('click', function() {
+            document.getElementById('dropdown-options').classList.toggle('show');
+        });
+
+        window.addEventListener('click', function(e) {
+            if (!e.target.matches('.dropdown-btn') && !e.target.matches('.dropdown-img')) {
+                var dropdowns = document.getElementsByClassName('dropdown-options');
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>

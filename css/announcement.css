@@ -1,0 +1,125 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    overflow-y: scroll;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+h1 {
+    color: #E2D3FF;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.shape1, .shape2 {
+    position: relative;
+    margin: 0;
+}
+
+.shape1 {
+    background-color: #964064;
+    width: 83.2%; 
+    height: 300px;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+}
+
+.shape2 {
+    background-color: #13072E;
+    margin-top: -10px;
+    width: 80%;
+    padding: 20px;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.left-image {  /*heads_up.png */
+    width: 455px;
+    height: 100%;
+    margin-right: -55px;
+    margin-left: -60px;
+}
+
+.labels {
+    text-align: justify;
+    margin-right: 20px;
+}
+
+.label {
+    text-align: justify;
+    margin-bottom: 10px;
+}
+
+.label:nth-child(1) {
+    font-size: 45px;
+    font-weight: 800;
+    color: #13072E;
+}
+
+.label:nth-child(2) {
+    font-size: 15px;
+    font-weight: normal;
+    margin-top: 15px;
+    margin-right: 63px;
+    color: #E2D3FF;
+}
+
+.close-btn {
+    position: absolute;
+    top: 17px;
+    right: 15px;
+    width: 43px;
+    height: 25px;
+    cursor: pointer;
+}
+
+.table-container {
+    margin-top: 20px;
+    color: #E2D3FF;
+}
+
+.table-label {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.table th, .table td {
+    padding: 10px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #4C6DD3;
+    color: #E2D3FF;
+    text-align: center;
+}
+
+.table tr:nth-child(even) {
+    background-color: #B7ACDB;
+    color: #13072E;
+}
+
+.table tr:nth-child(odd) {
+    background-color: #E2D3FF;
+    color: #13072E;
+}
