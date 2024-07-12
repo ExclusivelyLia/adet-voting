@@ -77,6 +77,13 @@
                 uploadedImage.src = 'css/pictures/haha.png'; // Reset to placeholder image if no file selected
             }
         });
+
+        function removePhoto() {
+            var fileInput = document.getElementById('file-upload');
+            var uploadedImage = document.getElementById('uploaded-image');
+            fileInput.value = ''; // Clear the file input
+            uploadedImage.src = 'css/pictures/haha.png'; // Reset to placeholder image
+        }
     
         // Function to validate and submit form
         function validateAndSubmit() {

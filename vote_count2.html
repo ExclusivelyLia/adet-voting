@@ -39,6 +39,7 @@
             </a>
         </div>
     </div>
+
     <div class="container">
         <div class="title-bar">
             <div class="title-section">
@@ -122,7 +123,7 @@
                     const presidentTableBody = document.getElementById('candidatesTableBody1');
                     const vicePresidentTableBody = document.getElementById('candidatesTableBody2');
                     const councilorTableBody = document.getElementById('candidatesTableBody3');
-
+        
                     data.forEach(candidate => {
                         const row = document.createElement('tr');
                         const imagePath = candidate.candidate_img === 'default-ppic.png' 
@@ -130,11 +131,11 @@
                             : 'Candidate/' + candidate.candidate_img;
                             
                         row.innerHTML = `
-                            <td><img src="${imagePath}" alt="Profile Picture" width="50"></td>
+                            <td><img class="profile-pic" src="${imagePath}" alt="Profile Picture"></td>
                             <td>${candidate.candidate_fname} ${candidate.candidate_lname}</td>
                             <td>${candidate.vote_count}</td>
                         `;
-
+        
                         if (candidate.position_id == 1) {
                             presidentTableBody.appendChild(row);
                         } else if (candidate.position_id == 2) {
