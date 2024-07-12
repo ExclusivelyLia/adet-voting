@@ -62,20 +62,28 @@ document.addEventListener('DOMContentLoaded', function() {
     if (datePickerInput && votingEndButton && flatpickrContainer) {
         const flatpickrInstance = flatpickr(datePickerInput, {
             onChange: function(selectedDates, dateStr, instance) {
-                votingEndButton.innerHTML = 
-                    '<i class="fa-solid fa-calendar-days" style="color: #e2e2e2;"></i> ' + dateStr;
-                setVotingDeadline(dateStr); // Call function to set voting deadline
-            },
-            appendTo: flatpickrContainer,
-            position: "below"
-        });
+            votingEndButton.innerHTML = 
+                '<i class="fa-solid fa-calendar-days" style="color: #e2e2e2;"></i> ' + dateStr;
+            setVotingDeadline(dateStr); // Call function to set voting deadline
+        },
+        appendTo: flatpickrContainer,
+        position: "below"
+    });
 
-        votingEndButton.addEventListener('click', function() {
-            flatpickrInstance.open();
-        });
-    } else {
-        console.error('Date picker elements not found in the DOM.');
-    }
+    votingEndButton.addEventListener('click', function() {
+        flatpickrInstance.open();
+    });
+} else {
+    console.error('Date picker elements not found in the DOM.');
+}
+
+    // Event delegation for delete buttons
+    candidatesTableBody.addEventListener('click', function(event) {
+        if (event.target.classList.contains('delete-button')) {
+            const candidateId = event.target.dataset.candidateId;
+            deleteCandidate(candidateId);
+        }
+    });
 
     // Function to fetch candidates
     function fetchCandidates() {

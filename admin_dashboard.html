@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="css/admin_dashboard.css">
+    <link rel="stylesheet" href="css/admin_dashboard1.css">
     <link rel="icon" href="css/pictures/ElectoVote_logo.ico" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -68,8 +68,9 @@
                 </div>
                 <img src="css/pictures/manage_election_icn.png" alt="Manage Election Icon">
             </div>
-            <div class="box box-2" id="votingStatus"></div>
-            <div>
+            <div class="b1b2">
+                <div class="box box-2" id="votingStatus"></div>
+                    <p class="votingStatus"></p>
                 <div class="box box-3">
                     <img src="css/pictures/voting_end_time_icn.png" alt="Voting End Time">
                     <p id="votingEndTime"></p>
@@ -77,14 +78,16 @@
             </div>
         </div>
         <div class="row">
-            <div class="box box-4" id="viewVoteCount">
+            <div class="box box-4">
                 <span class="label-main">Current Vote Counts</span>
                 <div class="view-more">
                     <img src="css/pictures/view_vote_count.png" alt="View Vote Count">
                     <span class="label-sub">Real-time update of the votes cast for each candidate.</span>
                 </div>
                 <div class="view-more-bottom">
-                    <span>View More</span>
+                    <span>
+                        <a href="vote_count2.html">View More</a>
+                    </span>
                     <img src="css/pictures/view_more.png" alt="View More">
                 </div>
             </div>            
@@ -113,86 +116,81 @@
     </div>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Fetch voting end time
-        fetch('fetch_voting_end_time.php')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+    // Fetch voting end time
+    fetch('fetch_voting_end_time.php')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            const votingEndTime = new Date(data.voting_deadline);
+            const currentDateTime = new Date();
+
+            // Update DOM with voting end time
+            const votingEndTimeElement = document.getElementById('votingEndTime');
+            votingEndTimeElement.textContent = `Voting Ends: ${votingEndTime.toLocaleString()}`;
+
+            // Check if voting is open or closed
+            if (currentDateTime > votingEndTime) {
+                document.getElementById('votingStatus').textContent = "Voting is currently closed.";
+                document.getElementById('votingStatus').style.color = "red";
+            } else {
+                document.getElementById('votingStatus').textContent = "Voting is currently open.";
+                document.getElementById('votingStatus').style.color = "green";
+            }
+        })
+        .catch(error => console.error('Error fetching voting end time:', error));
+
+    // Fetch vote counts
+    fetch('fetch_vote_counts.php')
+        .then(response => response.json())
+        .then(data => {
+            let bscsVotes = 0;
+            let bsitVotes = 0;
+
+            data.forEach(vote => {
+                if (vote.student_program === 'BSCS') {
+                    bscsVotes = parseInt(vote.vote_count);
+                } else if (vote.student_program === 'BSIT') {
+                    bsitVotes = parseInt(vote.vote_count);
                 }
-                return response.json();
-            })
-            .then(data => {
-                const votingEndTime = new Date(data.voting_deadline);
-                const currentDateTime = new Date();
+            });
 
-                // Update DOM with voting end time
-                const votingEndTimeElement = document.getElementById('votingEndTime');
-                votingEndTimeElement.textContent = `Voting Ends: ${votingEndTime.toLocaleString()}`;
+            // Update the chart legend
+            const legendItems = document.querySelectorAll('.legend-item');
+            legendItems[0].children[2].textContent = bscsVotes;
+            legendItems[1].children[2].textContent = bsitVotes;
 
-                // Check if voting is open or closed
-                if (currentDateTime > votingEndTime) {
-                    document.getElementById('votingStatus').textContent = "Voting is currently closed.";
-                    document.getElementById('votingStatus').style.color = "red";
-                } else {
-                    document.getElementById('votingStatus').textContent = "Voting is currently open.";
-                    document.getElementById('votingStatus').style.color = "green";
+            // Update the chart
+            const ctx = document.getElementById('trafficChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Computer Science', 'Information Technology'],
+                    datasets: [{
+                        data: [bscsVotes, bsitVotes],
+                        backgroundColor: ['#4C6DD3', '#B7ACDB'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    legend: {
+                        display: false
+                    }
                 }
-            })
-            .catch(error => console.error('Error fetching voting end time:', error));
+            });
 
-        // Fetch vote counts
-        fetch('fetch_vote_counts.php')
-            .then(response => response.json())
-            .then(data => {
-                let bscsVotes = 0;
-                let bsitVotes = 0;
+            // Update the total voters count
+            const totalVoters = bscsVotes + bsitVotes;
+            document.getElementById('totalVoters').textContent = `Total Voters: ${totalVoters}`;
+        })
+        .catch(error => console.error('Error fetching vote counts:', error));
+});
 
-                data.forEach(vote => {
-                    if (vote.student_program === 'BSCS') {
-                        bscsVotes = parseInt(vote.vote_count);
-                    } else if (vote.student_program === 'BSIT') {
-                        bsitVotes = parseInt(vote.vote_count);
-                    }
-                });
-
-                // Update the chart legend
-                const legendItems = document.querySelectorAll('.legend-item');
-                legendItems[0].children[2].textContent = bscsVotes;
-                legendItems[1].children[2].textContent = bsitVotes;
-
-                // Update the chart
-                const ctx = document.getElementById('trafficChart').getContext('2d');
-                new Chart(ctx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Computer Science', 'Information Technology'],
-                        datasets: [{
-                            data: [bscsVotes, bsitVotes],
-                            backgroundColor: ['#4C6DD3', '#B7ACDB'],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        legend: {
-                            display: false
-                        }
-                    }
-                });
-
-                // Update the total voters count
-                const totalVoters = bscsVotes + bsitVotes;
-                document.getElementById('totalVoters').textContent = `Total Voters: ${totalVoters}`;
-            })
-            .catch(error => console.error('Error fetching vote counts:', error));
-
-        // Add click event listener to the view vote count box
-        const viewVoteCountBox = document.getElementById('viewVoteCount');
-        viewVoteCountBox.addEventListener('click', function() {
-            window.location.href = 'vote_count.html';
-        });
-    });
     </script>
 </body>
 </html>
