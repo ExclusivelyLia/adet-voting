@@ -76,7 +76,6 @@
                     </thead>
                     <tbody id="candidatesTableBody1">
                         <!-- This will be populated by JavaScript -->
-                        
                     </tbody>
                 </table>
             </div>
@@ -97,8 +96,6 @@
                     </thead>
                     <tbody id="candidatesTableBody2">
                         <!-- This will be populated by JavaScript -->
-                        
-                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -119,11 +116,49 @@
                     </thead>
                     <tbody id="candidatesTableBody3">
                         <!-- This will be populated by JavaScript -->
-                        
                     </tbody>
                 </table>
             </div>
         </div>   
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('get_candidate_with_votes.php')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const presidentTableBody = document.getElementById('candidatesTableBody1');
+                    const vicePresidentTableBody = document.getElementById('candidatesTableBody2');
+                    const councilorTableBody = document.getElementById('candidatesTableBody3');
+
+                    data.forEach(candidate => {
+                        const row = document.createElement('tr');
+                        const imagePath = candidate.candidate_img === 'default-ppic.png' 
+                            ? 'css/pictures/default-ppic.png' 
+                            : 'Candidate/' + candidate.candidate_img;
+                            
+                        row.innerHTML = `
+                            <td><img src="${imagePath}" alt="Profile Picture" width="50"></td>
+                            <td>${candidate.candidate_fname} ${candidate.candidate_lname}</td>
+                            <td>${candidate.vote_count}</td>
+                        `;
+
+                        if (candidate.position_id == 1) {
+                            presidentTableBody.appendChild(row);
+                        } else if (candidate.position_id == 2) {
+                            vicePresidentTableBody.appendChild(row);
+                        } else if (candidate.position_id == 3) {
+                            councilorTableBody.appendChild(row);
+                        }
+                    });
+                })
+                .catch(error => console.error('Error fetching candidates:', error));
+        });
+    </script>
 </body>
 </html>
